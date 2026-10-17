@@ -72,7 +72,7 @@ Products, install commands and docs links live in [`src/data/products.ts`](./src
 
 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) checks and builds every pull request and deploys every push to `main` to Cloudflare Workers. It also rebuilds daily so star and download counts stay current.
 
-The custom domain is declared in [`wrangler.jsonc`](./wrangler.jsonc), so the first deploy creates the DNS record and certificate for `eshkra.dev`.
+The custom domain is declared in [`wrangler.jsonc`](./wrangler.jsonc), so the first deploy creates the DNS record and certificate for `eshkra.dev`. `www.eshkra.dev` redirects to it through a Cloudflare redirect rule, which the post-deploy smoke test checks.
 
 The workflow needs two repository secrets:
 

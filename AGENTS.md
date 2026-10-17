@@ -38,7 +38,7 @@ Treat these instructions as good defaults, not hard rules. The maintainer's pref
 
 ## The three ways to hurt yourself
 
-1. **Deploying from your machine.** Production deploys come only from CI on `main`. Never run `vp run deploy` or `wrangler deploy` locally, and never change DNS, routes or the custom domain in the Cloudflare dashboard. The domain is declared in `wrangler.jsonc`.
+1. **Deploying from your machine.** Production deploys come only from CI on `main`. Never run `vp run deploy` or `wrangler deploy` locally, and never change DNS, routes or the custom domain in the Cloudflare dashboard. The domain is declared in `wrangler.jsonc`. The `www.eshkra.dev` to `eshkra.dev` redirect is a zone redirect rule plus a placeholder `www` DNS record; the smoke test in `deploy.yml` checks it.
 2. **Letting an API break the build.** The stats fetchers in `src/lib/stats.ts` return `null` on failure and the page hides that number. Keep it that way. A GitHub, npm or PyPI outage must never block a deploy.
 3. **Scattering project data.** Names, taglines, install commands and docs links live only in `src/data/products.ts`. Docs may move to `*.eshkra.dev` later; that should stay a one-line change.
 
