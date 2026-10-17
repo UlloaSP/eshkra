@@ -9,7 +9,15 @@ export default defineConfig({
 		useTabs: true,
 		singleQuote: true,
 		printWidth: 100,
-		ignorePatterns: ['dist', '.astro', '.impeccable', 'node_modules', 'pnpm-lock.yaml'],
+		// Search engine verification files must stay byte-for-byte as issued.
+		ignorePatterns: [
+			'dist',
+			'.astro',
+			'.impeccable',
+			'node_modules',
+			'pnpm-lock.yaml',
+			'public/google*.html',
+		],
 	},
 	lint: {
 		ignorePatterns: ['dist', '.astro', 'node_modules'],
