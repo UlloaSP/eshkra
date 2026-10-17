@@ -1,4 +1,12 @@
 ---
+import '@fontsource-variable/mona-sans';
+import '@fontsource-variable/jetbrains-mono';
+import { Image } from 'astro:assets';
+import Icon from '../components/Icon.astro';
+import Wordmark from '../components/Wordmark.astro';
+import eshkraMark from '../assets/brand/eshkra.png';
+import { products } from '../data/products';
+
 interface Props {
 	title: string;
 	description: string;
@@ -6,6 +14,7 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -13,57 +22,157 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="canonical" href={canonical} />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="color-scheme" content="dark light" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0a0a0d" media="(prefers-color-scheme: dark)" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={new URL('/icon-512.png', Astro.site)} />
 	</head>
 	<body>
-		<header class="site-header">
-			<a class="wordmark" href="/">eshkra</a>
-			<nav aria-label="Main">
-				<a href="/#open-source">Open source</a>
-				<a href="https://github.com/UlloaSP">GitHub</a>
-			</nav>
+		<a class="skip" href="#main">Skip to content</a>
+
+		<header class="nav">
+			<div class="nav-inner">
+				<a class="brand" href="/" aria-label="eshkra home">
+					<Image
+						src={eshkraMark}
+						alt=""
+						width={32}
+						height={32}
+						densities={[1, 2]}
+						class="brand-mark"
+					/>
+					<span class="brand-word">eshkra</span>
+				</a>
+				<nav aria-label="Main" class="nav-links">
+					<a href="/#projects">Projects</a>
+					{
+						products.map((p) => (
+							<a class="nav-product" href={`/#${p.id}`}>
+								<Wordmark id={p.id} />
+							</a>
+						))
+					}
+				</nav>
+				<div class="nav-actions">
+					<a class="icon-link" href="https://github.com/UlloaSP" aria-label="eshkra on GitHub">
+						<Icon name="github" size={20} />
+					</a>
+					<a class="button small" href="https://mlsuite.irlab.org">
+						Try <Wordmark id="mlsuite" /> <Icon name="arrow-up-right" size={14} />
+					</a>
+				</div>
+			</div>
 		</header>
-		<main>
+
+		<main id="main">
 			<slot />
 		</main>
-		<footer class="site-footer">
-			<span>© {new Date().getFullYear()} eshkra</span>
-			<a href="https://github.com/UlloaSP">github.com/UlloaSP</a>
+
+		<footer class="footer">
+			<div class="footer-band">
+				<Image
+					src={eshkraMark}
+					alt=""
+					widths={[220, 440]}
+					sizes="13.75rem"
+					class="footer-mark"
+					loading="lazy"
+				/>
+				<p class="footer-word">eshkra</p>
+			</div>
+			<div class="footer-grid">
+				<div class="footer-col">
+					<h2>Projects</h2>
+					{
+						products.map((p) => (
+							<a href={`https://github.com/${p.repo}`}>
+								<Wordmark id={p.id} />
+							</a>
+						))
+					}
+				</div>
+				<div class="footer-col">
+					<h2>Docs</h2>
+					{
+						products
+							.filter((p) => p.docs)
+							.map((p) => (
+								<a href={p.docs}>
+									<Wordmark id={p.id} />
+								</a>
+							))
+					}
+					<a href="https://github.com/UlloaSP/mlsuite#readme">
+						<Wordmark id="mlsuite" />
+					</a>
+				</div>
+				<div class="footer-col">
+					<h2>eshkra</h2>
+					<a href="https://github.com/UlloaSP">GitHub</a>
+					<a href="https://mlsuite.irlab.org"><Wordmark id="mlsuite" /> instance</a>
+				</div>
+				<p class="footer-legal">© {year} eshkra. Every project is MIT licensed.</p>
+			</div>
 		</footer>
 	</body>
 </html>
 
 <style is:global>
 	:root {
-		--bg: #0b0c0e;
-		--surface: #131519;
-		--border: #24272d;
-		--text: #e8e9ec;
-		--muted: #8b909a;
-		--accent: #7cf2b1;
-		--font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-		--font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
-		--max: 72rem;
+		--bg: #ffffff;
+		--bg-subtle: #f7f7f9;
+		--surface: #ffffff;
+		--border: #e7e7ee;
+		--border-strong: #d2d2dc;
+		--text: #0b0b10;
+		--text-2: #474756;
+		--text-3: #666675;
+		/* eshkra's ember, from the mark's core. Large text and glow only; small text uses ember-ink. */
+		--ember: #e8590c;
+		--ember-ink: #c2410c;
+		--ember-glow: rgb(255 138 40 / 0.32);
+		--button-bg: #0b0b10;
+		--button-text: #ffffff;
+
+		/* Product hues, from the product marks. */
+		--hue-mlbundle: #e2481c;
+		--hue-mlschema: #f2a516;
+		--hue-mlform: #ff6a1a;
+		--hue-mlsuite: #f07a1e;
+
+		--font-sans: 'Mona Sans Variable', 'Mona Sans', system-ui, sans-serif;
+		--font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, monospace;
+		--radius: 12px;
+		--max: 76rem;
+		--gutter: clamp(1.25rem, 4vw, 2.5rem);
+		--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
-	@media (prefers-color-scheme: light) {
+	@media (prefers-color-scheme: dark) {
 		:root {
-			--bg: #fbfbfa;
-			--surface: #ffffff;
-			--border: #e3e4e6;
-			--text: #15171a;
-			--muted: #5f646d;
-			--accent: #0a8a52;
+			--bg: #0a0a0d;
+			--bg-subtle: #111116;
+			--surface: #131318;
+			--border: #24242c;
+			--border-strong: #34343e;
+			--text: #f4f4f6;
+			--text-2: #b6b6c2;
+			--text-3: #8e8e9b;
+			--ember: #ff8a3d;
+			--ember-ink: #ff9a55;
+			--ember-glow: rgb(255 138 40 / 0.22);
+			--button-bg: #f4f4f6;
+			--button-text: #0b0b10;
 		}
 	}
 
@@ -73,71 +182,294 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 		box-sizing: border-box;
 	}
 
+	html {
+		scroll-behavior: smooth;
+		scrollbar-color: var(--border-strong) var(--bg);
+		-webkit-text-size-adjust: 100%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+
 	body {
 		margin: 0;
 		background: var(--bg);
 		color: var(--text);
 		font-family: var(--font-sans);
-		line-height: 1.55;
+		font-size: 1rem;
+		line-height: 1.6;
 		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	/* A tint of ember keeps selected text in its own colour, readable in both themes. */
+	::selection {
+		background: color-mix(in oklab, var(--ember) 28%, transparent);
+		color: var(--text);
 	}
 
 	a {
 		color: inherit;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
 	}
 
 	:focus-visible {
-		outline: 2px solid var(--accent);
+		outline: 2px solid var(--ember);
 		outline-offset: 3px;
+		border-radius: 4px;
 	}
 
-	main {
+	h1,
+	h2,
+	h3 {
+		text-wrap: balance;
+	}
+
+	.wrap {
 		max-width: var(--max);
 		margin: 0 auto;
-		padding: 0 1.5rem;
+		padding: 0 var(--gutter);
+	}
+
+	.button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.25rem;
+		border-radius: 999px;
+		background: var(--button-bg);
+		color: var(--button-text);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		line-height: 1.2;
+		text-decoration: none;
+		transition:
+			box-shadow 280ms var(--ease-out),
+			transform 280ms var(--ease-out);
+	}
+
+	.button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.35);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.button:hover {
+			transform: none;
+		}
+	}
+
+	.button.ghost {
+		background: transparent;
+		color: var(--text);
+		box-shadow: inset 0 0 0 1px var(--border-strong);
+	}
+
+	.button.ghost:hover {
+		box-shadow: inset 0 0 0 1px var(--text-3);
+	}
+
+	.button.small {
+		padding: 0.5rem 0.875rem;
+		font-size: 0.875rem;
+	}
+
+	.mono {
+		font-family: var(--font-mono);
+		font-feature-settings: 'calt' 0;
+	}
+
+	.skip {
+		position: absolute;
+		left: 1rem;
+		top: -3rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		background: var(--button-bg);
+		color: var(--button-text);
+		z-index: 20;
+	}
+
+	.skip:focus {
+		top: 1rem;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 </style>
 
 <style>
-	.site-header,
-	.site-footer {
-		max-width: var(--max);
-		margin: 0 auto;
-		padding: 1.25rem 1.5rem;
+	.nav {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: color-mix(in oklab, var(--bg) 82%, transparent);
+		backdrop-filter: saturate(1.4) blur(14px);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.nav-inner {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
+		gap: 2rem;
+		max-width: var(--max);
+		height: 4rem;
+		margin: 0 auto;
+		padding: 0 var(--gutter);
 	}
 
-	.wordmark {
-		font-family: var(--font-mono);
-		font-weight: 600;
-		letter-spacing: -0.02em;
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
 		text-decoration: none;
 	}
 
-	nav {
+	.brand-mark {
+		width: 2rem;
+		height: 2rem;
+	}
+
+	.brand-word {
+		font-size: 1.25rem;
+		font-weight: 760;
+		font-stretch: 108%;
+		letter-spacing: -0.03em;
+	}
+
+	.nav-links {
 		display: flex;
 		gap: 1.5rem;
+		font-size: 0.9375rem;
+		color: var(--text-2);
 	}
 
-	nav a,
-	.site-footer a {
-		color: var(--muted);
+	.nav-links a {
 		text-decoration: none;
-		font-size: 0.925rem;
 	}
 
-	nav a:hover,
-	.site-footer a:hover {
+	.nav-links a:hover {
 		color: var(--text);
 	}
 
-	.site-footer {
-		margin-top: 6rem;
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-left: auto;
+	}
+
+	.icon-link {
+		display: inline-flex;
+		color: var(--text-2);
+	}
+
+	.icon-link:hover {
+		color: var(--text);
+	}
+
+	@media (max-width: 60rem) {
+		.nav-product {
+			display: none;
+		}
+	}
+
+	@media (max-width: 30rem) {
+		.nav-links {
+			display: none;
+		}
+	}
+
+	.footer {
+		margin-top: clamp(5rem, 10vw, 8rem);
 		border-top: 1px solid var(--border);
-		color: var(--muted);
+	}
+
+	.footer-band {
+		position: relative;
+		display: grid;
+		place-items: center;
+		gap: 0.5rem;
+		padding: clamp(3.5rem, 8vw, 6rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
+		overflow: hidden;
+		background: var(--bg-subtle);
+	}
+
+	.footer-mark {
+		width: clamp(9rem, 18vw, 13.75rem);
+		height: auto;
+	}
+
+	.footer-word {
+		margin: 0;
+		font-size: clamp(2.5rem, 7vw, 4.5rem);
+		font-weight: 760;
+		font-stretch: 110%;
+		letter-spacing: -0.04em;
+		line-height: 1;
+	}
+
+	.footer-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 12rem)) 1fr;
+		gap: 2rem;
+		max-width: var(--max);
+		margin: 0 auto;
+		padding: 3rem var(--gutter) 3.5rem;
+	}
+
+	.footer-col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		font-size: 0.9375rem;
+	}
+
+	.footer-col h2 {
+		margin: 0 0 0.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text-3);
+	}
+
+	.footer-col a {
+		color: var(--text-2);
+		text-decoration: none;
+	}
+
+	.footer-col a:hover {
+		color: var(--text);
+	}
+
+	.footer-legal {
+		align-self: end;
+		justify-self: end;
+		margin: 0;
 		font-size: 0.875rem;
+		color: var(--text-3);
+	}
+
+	@media (max-width: 48rem) {
+		.footer-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.footer-legal {
+			grid-column: 1 / -1;
+			justify-self: start;
+		}
 	}
 </style>

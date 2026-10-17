@@ -1,154 +1,871 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import ProductCard from '../components/ProductCard.astro';
-import { products } from '../data/products';
+import Icon from '../components/Icon.astro';
+import ProductPanel from '../components/ProductPanel.astro';
+import Wordmark from '../components/Wordmark.astro';
+import { marks } from '../components/marks';
+import eshkraMark from '../assets/brand/eshkra.png';
+import { applications, libraries, products } from '../data/products';
 import { formatCount, getStats, sum } from '../lib/stats';
 
 const stats = await getStats(products);
 const totalStars = sum([...stats.values()].map((s) => s.stars));
 const totalDownloads = sum([...stats.values()].map((s) => s.monthlyDownloads));
+
+const groups = [
+	{
+		id: 'libraries',
+		title: 'Libraries',
+		subtitle: 'Building blocks for Python and TypeScript',
+		body: 'Use one, or chain them: package the model, describe its inputs, render the form your users fill in.',
+		items: libraries,
+	},
+	{
+		id: 'application',
+		title: 'Application',
+		subtitle: 'The whole loop, self-hosted',
+		body: 'Run predictions, collect reviews and corrections, and export them for evaluation or retraining.',
+		items: applications,
+	},
+];
 ---
 
 <Base
 	title="eshkra — open-source tooling for ML models people can use"
-	description="Package a trained model, describe its inputs, render the form and collect feedback. mlbundle, mlschema, mlform and MLSuite."
+	description="Package a trained model, describe its inputs, render the form and collect feedback. MLbundle, MLschema, MLform and MLsuite, all MIT licensed."
 >
-	<section class="hero">
-		<h1>Put machine-learning models in front of people.</h1>
-		<p class="lede">
-			Open-source tools that take a trained model from a file on disk to a form anyone can fill in,
-			with every prediction traceable and every correction kept.
-		</p>
-		<div class="actions">
-			<a class="button primary" href="https://mlsuite.irlab.org">Try MLSuite</a>
-			<a class="button" href="#open-source">See the tools</a>
+	<div class="first-screen">
+	<section class="hero" aria-labelledby="hero-title">
+		<div class="hero-inner wrap">
+			<Image
+				src={eshkraMark}
+				alt=""
+				widths={[144, 288]}
+				sizes="9rem"
+				loading="eager"
+				fetchpriority="high"
+				class="hero-mark"
+			/>
+			<h1 id="hero-title">
+				Put machine-learning models <span class="accent">in front of people.</span>
+			</h1>
+			<p class="lede">
+				Open-source tools that take a trained model from a file on disk to a form anyone can fill
+				in, with every prediction traceable and every correction kept.
+			</p>
+		</div>
+
+		<ol class="path" aria-label="The eshkra projects">
+				{
+					products.map((p) => (
+						<li class="step" style={`--hue: var(--hue-${p.id})`}>
+							<a class="tile" href={`#${p.id}`} aria-label={p.name}>
+								<Image
+									src={marks[p.id]}
+									alt=""
+									width={64}
+									densities={[1, 2]}
+									loading="eager"
+								/>
+							</a>
+							<Wordmark id={p.id} class="step-name" />
+						</li>
+					))
+				}
+		</ol>
+	</section>
+
+	<section class="metrics" aria-label="Project numbers">
+		<ul class="metrics-inner wrap mono">
+			{
+				totalDownloads !== null && (
+					<li>
+						<Icon name="download" size={18} />
+						<strong>{formatCount(totalDownloads)}</strong> downloads last month
+					</li>
+				)
+			}
+			{
+				totalStars !== null && (
+					<li>
+						<Icon name="star" size={18} />
+						<strong>{formatCount(totalStars)}</strong> GitHub stars
+					</li>
+				)
+			}
+			<li>
+				<Icon name="code" size={18} />
+				<strong>{products.length}</strong> open-source projects
+			</li>
+			<li>
+				<Icon name="scale" size={18} />
+				<strong>MIT</strong> licensed
+			</li>
+		</ul>
+	</section>
+	</div>
+
+	<section class="family wrap" id="projects" aria-labelledby="family-title">
+		<div class="section-head">
+			<h2 id="family-title">One toolkit, from model to feedback.</h2>
+			<p>
+				Each project works on its own. Together they cover the loop after training: a safe model
+				file, typed inputs, a real form, and a place where people review the results.
+			</p>
+		</div>
+
+		<div class="groups">
+			{
+				groups.map((g) => (
+					<div class={`group group-${g.id}`}>
+						<div class="group-head">
+							<h3>{g.title}</h3>
+							<p>{g.subtitle}</p>
+						</div>
+						<p class="group-body">{g.body}</p>
+						<ul class="group-items">
+							{g.items.map((p) => (
+								<li>
+									<a href={`#${p.id}`}>
+										<Image src={marks[p.id]} alt="" width={28} densities={[1, 2]} />
+										<Wordmark id={p.id} class="item-name" />
+										<span class="item-short">{p.short}</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
 		</div>
 	</section>
 
-	<section id="open-source" aria-labelledby="open-source-title">
-		<h2 id="open-source-title">Open source</h2>
-		<p class="section-lede">
-			Each piece works on its own. Together they cover the loop from training to feedback.
-		</p>
-		<div class="grid">
-			{products.map((product, index) => (
-				<ProductCard product={product} stats={stats.get(product.id)} index={index} />
-			))}
+	<section class="oss wrap" aria-labelledby="oss-title">
+		<div class="section-head">
+			<h2 id="oss-title">Open source</h2>
+			<p>Every project is MIT licensed and developed in the open on GitHub.</p>
 		</div>
-	</section>
-
-	{(totalStars !== null || totalDownloads !== null) && (
-		<section class="numbers" aria-label="Project numbers">
-			{totalDownloads !== null && (
-				<div>
-					<strong>{formatCount(totalDownloads)}</strong>
-					<span>downloads last month</span>
-				</div>
-			)}
-			{totalStars !== null && (
-				<div>
-					<strong>{formatCount(totalStars)}</strong>
-					<span>GitHub stars</span>
-				</div>
-			)}
-			<div>
-				<strong>{products.length}</strong>
-				<span>open-source projects</span>
+		<div class="oss-body">
+			<nav class="rail" aria-label="Projects">
+				<ul>
+					{
+						products.map((p) => (
+							<li>
+								<a href={`#${p.id}`}>
+									<Image src={marks[p.id]} alt="" width={22} densities={[1, 2]} />
+									<Wordmark id={p.id} />
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+			<div class="panels">
+				{products.map((p) => <ProductPanel product={p} stats={stats.get(p.id)} />)}
 			</div>
-		</section>
-	)}
+		</div>
+	</section>
+
+	<section class="mission wrap" aria-labelledby="mission-title">
+		<h2 id="mission-title" class="visually-hidden">Why eshkra</h2>
+		<p class="mission-text">
+			Testing a model with real users usually means rebuilding the same infrastructure every time.{' '}
+			<span>We build it once, in the open, so you don’t have to.</span>
+		</p>
+		<p class="mission-note">
+			Nothing to sell. If a project goes in the wrong direction, the code is there to inspect,
+			change and fork.
+		</p>
+	</section>
 </Base>
 
+<script>
+	// Hero marks: scatter over the hero's free space on wide screens, then teleport one at a time.
+	const hero = document.querySelector<HTMLElement>('.hero');
+	const steps = [...(hero?.querySelectorAll<HTMLElement>('.path .step') ?? [])];
+	const blockers = ['.hero-mark', 'h1', '.lede']
+		.map((selector) => hero?.querySelector<HTMLElement>(selector))
+		.filter((el): el is HTMLElement => el !== null && el !== undefined);
+	const wide = window.matchMedia('(min-width: 60rem)');
+	const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+	type Box = { x: number; y: number; w: number; h: number };
+	const placed = new Map<HTMLElement, Box>();
+	// One mark teleports every 2.5 seconds, in turn, so each one moves every ten seconds.
+	const TICK = 2500;
+	let ticker = 0;
+	let turn = 0;
+	let inView = true;
+
+	const boxOf = (el: HTMLElement): Box => {
+		const r = el.getBoundingClientRect();
+		const h = hero!.getBoundingClientRect();
+		return { x: r.left - h.left, y: r.top - h.top, w: r.width, h: r.height };
+	};
+	const overlaps = (a: Box, b: Box, gap: number) =>
+		a.x < b.x + b.w + gap && b.x < a.x + a.w + gap && a.y < b.y + b.h + gap && b.y < a.y + a.h + gap;
+
+	// A random free spot: clear of the headline block and of every other mark.
+	const freeSpot = (step: HTMLElement): Box | null => {
+		const pad = 24;
+		const w = step.offsetWidth;
+		const h = step.offsetHeight;
+		const W = hero!.clientWidth;
+		const H = hero!.clientHeight;
+		const taken = [
+			...blockers.map(boxOf),
+			...[...placed].filter(([other]) => other !== step).map(([, box]) => box),
+		];
+		for (let attempt = 0; attempt < 400; attempt++) {
+			const box = {
+				x: pad + Math.random() * (W - w - 2 * pad),
+				y: pad + Math.random() * (H - h - 2 * pad),
+				w,
+				h,
+			};
+			if (!taken.some((t) => overlaps(box, t, 32))) return box;
+		}
+		return null;
+	};
+
+	const place = (step: HTMLElement, box: Box) => {
+		step.style.translate = `${Math.round(box.x)}px ${Math.round(box.y)}px`;
+		placed.set(step, box);
+	};
+
+	const unscatter = () => {
+		hero?.classList.remove('is-scatter');
+		placed.clear();
+		for (const step of steps) {
+			step.style.translate = '';
+			step.classList.remove('is-out', 'is-in');
+		}
+		window.clearInterval(ticker);
+	};
+
+	const scatter = (): boolean => {
+		unscatter();
+		if (!hero || !wide.matches) return false;
+		hero.classList.add('is-scatter');
+		for (const step of steps) {
+			const box = freeSpot(step);
+			if (!box) {
+				unscatter();
+				return false;
+			}
+			place(step, box);
+		}
+		return true;
+	};
+
+	const teleport = (step: HTMLElement) => {
+		const next = freeSpot(step);
+		if (!next) return;
+		placed.set(step, next);
+		step.classList.add('is-out');
+		step.addEventListener(
+			'animationend',
+			() => {
+				step.classList.remove('is-out');
+				place(step, next);
+				step.classList.add('is-in');
+				step.addEventListener('animationend', () => step.classList.remove('is-in'), {
+					once: true,
+				});
+			},
+			{ once: true },
+		);
+	};
+
+	const tick = () => {
+		if (!inView || document.hidden) return;
+		const step = steps[turn % steps.length];
+		turn++;
+		if (!step.classList.contains('is-out') && !step.classList.contains('is-in')) teleport(step);
+	};
+
+	const start = () => {
+		if (!scatter() || still.matches) return;
+		turn = 0;
+		ticker = window.setInterval(tick, TICK);
+	};
+
+	if (hero && steps.length) {
+		new IntersectionObserver(([entry]) => {
+			inView = entry.isIntersecting;
+		}).observe(hero);
+		let resize = 0;
+		window.addEventListener('resize', () => {
+			window.clearTimeout(resize);
+			resize = window.setTimeout(start, 200);
+		});
+		wide.addEventListener('change', start);
+		still.addEventListener('change', start);
+		start();
+	}
+
+	// Marks the rail entry of the panel crossing the middle of the viewport. Without
+	// JavaScript every entry stays a plain link.
+	const links = new Map(
+		[...document.querySelectorAll<HTMLAnchorElement>('.rail a')].map((a) => [
+			a.hash.slice(1),
+			a,
+		]),
+	);
+	const observer = new IntersectionObserver(
+		(entries) => {
+			for (const entry of entries) {
+				if (!entry.isIntersecting) continue;
+				for (const a of links.values()) a.removeAttribute('aria-current');
+				links.get(entry.target.id)?.setAttribute('aria-current', 'location');
+			}
+		},
+		{ rootMargin: '-45% 0px -50% 0px' },
+	);
+	for (const id of links.keys()) {
+		const panel = document.getElementById(id);
+		if (panel) observer.observe(panel);
+	}
+</script>
+
 <style>
+	/* The first screen fills the visible height under the sticky nav, metrics on its floor. */
+	.first-screen {
+		display: flex;
+		flex-direction: column;
+		min-height: calc(100svh - 4rem - 1px);
+	}
+
+	/* Hero */
 	.hero {
-		padding: 7rem 0 5rem;
-		max-width: 48rem;
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: center;
+		position: relative;
+		overflow: hidden;
+		border-bottom: 1px solid var(--border);
+		background: radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0) 0 0 / 24px 24px;
+	}
+
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(60% 55% at 50% 50%, transparent 0%, var(--bg) 88%);
+		pointer-events: none;
+	}
+
+	.hero-inner {
+		width: 100%;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding-top: clamp(2.75rem, 5vw, 3.75rem);
+		padding-bottom: clamp(2rem, 3.8vw, 2.5rem);
+	}
+
+
+	.hero-mark {
+		width: clamp(4.5rem, 7vw, 7rem);
+		height: auto;
+		margin-bottom: clamp(1rem, 1.8vw, 1.5rem);
+		animation: mark-in 900ms var(--ease-out) both;
+	}
+
+	@keyframes mark-in {
+		from {
+			opacity: 0;
+			transform: translateY(8px) scale(0.96) rotate(-8deg);
+		}
 	}
 
 	h1 {
 		margin: 0;
-		font-size: clamp(2.4rem, 6vw, 4rem);
-		line-height: 1.05;
-		letter-spacing: -0.035em;
-		text-wrap: balance;
+		max-width: 15ch;
+		font-size: clamp(2.75rem, 6.2vw, 4.75rem);
+		font-weight: 700;
+		font-stretch: 106%;
+		line-height: 0.98;
+		letter-spacing: -0.04em;
+	}
+
+	.accent {
+		color: var(--ember);
 	}
 
 	.lede {
 		margin: 1.5rem 0 0;
-		font-size: 1.2rem;
-		color: var(--muted);
-		max-width: 38rem;
+		max-width: 44rem;
+		font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+		color: var(--text-2);
 	}
 
-	.actions {
+
+	/* Without JavaScript, or on narrow screens, the marks sit in a row under the lede. */
+	.path {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		width: min(calc(100% - 2 * var(--gutter)), 52rem);
+		margin: 0 auto clamp(2.25rem, 4vw, 2.75rem);
+		padding: 0;
+		list-style: none;
+	}
+
+	.step {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	/*
+	 * Wide screens with JavaScript scatter the marks over the hero's free space. Each one holds
+	 * its place, then dissolves into scanlines and re-forms somewhere else; it never travels.
+	 */
+	.hero.is-scatter .path {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: auto;
+		margin: 0;
+		pointer-events: none;
+	}
+
+	.hero.is-scatter .step {
+		position: absolute;
+		top: 0;
+		left: 0;
+		pointer-events: auto;
+	}
+
+	.step.is-out,
+	.step.is-in {
+		mask-image: repeating-linear-gradient(
+			to bottom,
+			#000 0 var(--band),
+			transparent var(--band) 5px
+		);
+	}
+
+	.step.is-out {
+		animation: dissolve 750ms cubic-bezier(0.55, 0, 0.75, 0.2) forwards;
+	}
+
+	.step.is-in {
+		animation: dissolve 900ms var(--ease-out) reverse both;
+	}
+
+	@property --band {
+		syntax: '<length>';
+		inherits: false;
+		initial-value: 5px;
+	}
+
+	@keyframes dissolve {
+		0% {
+			--band: 5px;
+			opacity: 1;
+			filter: none;
+			scale: 1;
+		}
+		40% {
+			filter: brightness(1.5) drop-shadow(0 0 14px var(--ember-glow));
+		}
+		100% {
+			--band: 0px;
+			opacity: 0;
+			filter: blur(3px) brightness(2);
+			scale: 1.1 0.9;
+		}
+	}
+
+	.tile {
+		display: grid;
+		place-items: center;
+		width: 6.5rem;
+		height: 6.5rem;
+		margin-bottom: 0.75rem;
+		border: 1px solid var(--border);
+		border-radius: 1.5rem;
+		background: var(--surface);
+		box-shadow:
+			0 12px 28px -14px color-mix(in oklab, var(--hue) 55%, transparent),
+			0 2px 6px rgb(0 0 0 / 0.06);
+		transition:
+			transform 320ms var(--ease-out),
+			box-shadow 320ms var(--ease-out);
+	}
+
+	.tile img {
+		width: 4rem;
+		height: 4rem;
+		object-fit: contain;
+	}
+
+	.tile:hover {
+		transform: translateY(-4px);
+		box-shadow:
+			0 18px 34px -14px color-mix(in oklab, var(--hue) 70%, transparent),
+			0 2px 6px rgb(0 0 0 / 0.08);
+	}
+
+	.step :global(.step-name) {
+		font-size: 1.0625rem;
+	}
+
+
+	/* Short laptop screens: tighten the first screen so it still fits the visible height. */
+	@media (max-height: 50rem) and (min-width: 40rem) {
+		.hero-inner {
+			padding-top: 1.75rem;
+			padding-bottom: 1.75rem;
+		}
+
+		.hero-mark {
+			width: 3.5rem;
+			margin-bottom: 0.75rem;
+		}
+
+		h1 {
+			font-size: clamp(2.75rem, 5.4vw, 3.75rem);
+		}
+
+		.lede {
+			margin-top: 1rem;
+		}
+
+
+		.tile {
+			width: 5.25rem;
+			height: 5.25rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.tile img {
+			width: 3.25rem;
+			height: 3.25rem;
+		}
+
+
+		.metrics-inner {
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-mark {
+			animation: none;
+		}
+
+		.tile {
+			transition: none;
+		}
+	}
+
+	/* Metrics strip */
+	.metrics {
+		border-bottom: 1px solid var(--border);
+		background: var(--bg-subtle);
+	}
+
+	.metrics-inner {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.75rem;
-		margin-top: 2.25rem;
+		justify-content: center;
+		gap: 1rem 3rem;
+		margin: 0 auto;
+		padding-top: 1.375rem;
+		padding-bottom: 1.375rem;
+		list-style: none;
+		font-size: 0.8125rem;
+		letter-spacing: 0.02em;
+		color: var(--text-3);
 	}
 
-	.button {
-		padding: 0.7rem 1.2rem;
-		border: 1px solid var(--border);
-		border-radius: 0.5rem;
-		font-weight: 500;
-		text-decoration: none;
+	.metrics li {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.625rem;
 	}
 
-	.button:hover {
-		border-color: var(--muted);
+	.metrics strong {
+		font-family: var(--font-sans);
+		font-size: 1.375rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--text);
+		font-variant-numeric: tabular-nums;
 	}
 
-	.button.primary {
-		background: var(--text);
-		border-color: var(--text);
-		color: var(--bg);
+	/* Section heads */
+	.section-head {
+		max-width: 44rem;
 	}
 
-	.button.primary:hover {
-		opacity: 0.88;
-	}
-
-	h2 {
+	.section-head h2 {
 		margin: 0;
-		font-size: 1.75rem;
+		font-size: clamp(2rem, 4.2vw, 3.25rem);
+		font-weight: 700;
+		font-stretch: 104%;
+		line-height: 1.02;
+		letter-spacing: -0.04em;
+	}
+
+	.section-head p {
+		margin: 1rem 0 0;
+		font-size: 1.125rem;
+		color: var(--text-2);
+	}
+
+	/* Family index */
+	.family {
+		padding-top: clamp(4.5rem, 9vw, 7rem);
+	}
+
+	.groups {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 1.35fr);
+		grid-template-rows: auto auto auto;
+		column-gap: 1.5rem;
+		margin-top: 3rem;
+	}
+
+	.group {
+		display: grid;
+		grid-row: span 3;
+		grid-template-rows: subgrid;
+		row-gap: 0;
+	}
+
+	.group-head {
+		padding: 1.25rem 1.375rem;
+		border-radius: var(--radius);
+		color: #ffffff;
+	}
+
+	.group-libraries .group-head {
+		background: linear-gradient(120deg, #26262b 0%, #33251f 50%, #9a3412 100%);
+	}
+
+	.group-application .group-head {
+		background: linear-gradient(120deg, #26262b 0%, #3b2a20 45%, #c2410c 85%, var(--hue-mlsuite) 100%);
+	}
+
+	.group-head h3 {
+		margin: 0;
+		font-size: 1.375rem;
+		font-weight: 700;
 		letter-spacing: -0.02em;
 	}
 
-	.section-lede {
-		margin: 0.5rem 0 2rem;
-		color: var(--muted);
+	.group-head p {
+		margin: 0.125rem 0 0;
+		font-size: 0.9375rem;
+		opacity: 0.92;
 	}
 
-	.grid {
+	.group-body {
+		margin: 1.125rem 0 0;
+		color: var(--text-2);
+		font-size: 0.9375rem;
+		max-width: 38rem;
+	}
+
+	.group-items {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+		gap: 1rem 1.5rem;
+		margin: 1.5rem 0 0;
+		padding: 1.5rem 0 0;
+		border-top: 1px solid var(--border-strong);
+		align-content: start;
+		list-style: none;
 	}
 
-	.numbers {
+	.group-items a {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-		gap: 1rem;
-		margin-top: 5rem;
-		padding: 2rem 0;
-		border-top: 1px solid var(--border);
-		border-bottom: 1px solid var(--border);
+		grid-template-columns: auto 1fr;
+		column-gap: 0.625rem;
+		align-items: center;
+		text-decoration: none;
 	}
 
-	.numbers div {
+	.group-items img {
+		grid-row: span 2;
+		width: 1.75rem;
+		height: 1.75rem;
+		object-fit: contain;
+	}
+
+	.group-items :global(.item-name) {
+		font-size: 1.0625rem;
+	}
+
+	.item-short {
+		font-size: 0.875rem;
+		color: var(--text-3);
+	}
+
+	.group-items a {
+		padding: 0.375rem;
+		margin: -0.375rem;
+		border-radius: 10px;
+		transition: background-color 220ms var(--ease-out);
+	}
+
+	.group-items a:hover {
+		background: var(--bg-subtle);
+	}
+
+	.group-items a:hover :global(.item-name) {
+		text-decoration: underline;
+		text-decoration-color: var(--ember);
+	}
+
+	/* Open source panels with a rail that marks the panel in view. */
+	.oss {
+		padding-top: clamp(5rem, 10vw, 8rem);
+	}
+
+	.oss-body {
+		display: grid;
+		grid-template-columns: 10rem minmax(0, 1fr);
+		gap: 2rem;
+		margin-top: 3rem;
+	}
+
+	.rail ul {
+		position: sticky;
+		top: 6.5rem;
 		display: flex;
 		flex-direction: column;
+		gap: 0.25rem;
+		margin: 0;
+		padding: clamp(3rem, 6vw, 4.5rem) 0 0;
+		list-style: none;
 	}
 
-	.numbers strong {
-		font-family: var(--font-mono);
-		font-size: 2.25rem;
-		letter-spacing: -0.03em;
+	.rail a {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.5rem 0.625rem;
+		border-radius: 8px;
+		font-weight: 550;
+		text-decoration: none;
+		color: var(--text-2);
+		transition:
+			color 240ms var(--ease-out),
+			background-color 240ms var(--ease-out);
 	}
 
-	.numbers span {
-		color: var(--muted);
-		font-size: 0.9rem;
+	.rail a:hover {
+		background: var(--bg-subtle);
+	}
+
+	.rail img {
+		width: 1.375rem;
+		height: 1.375rem;
+		object-fit: contain;
+		opacity: 0.7;
+		transition: opacity 240ms var(--ease-out);
+	}
+
+	.rail a[aria-current] {
+		color: var(--ember-ink);
+		background: color-mix(in oklab, var(--ember) 12%, transparent);
+	}
+
+	.rail a[aria-current] img {
+		opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.rail a,
+		.rail img {
+			transition: none;
+		}
+	}
+
+
+	/* Mission */
+	.mission {
+		padding-top: clamp(5rem, 10vw, 8rem);
+		text-align: center;
+	}
+
+	.mission-text {
+		max-width: 52rem;
+		margin: 0 auto;
+		font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+		font-weight: 600;
+		line-height: 1.15;
+		letter-spacing: -0.035em;
+		color: var(--text-3);
+		text-wrap: balance;
+	}
+
+	.mission-text span {
+		color: var(--text);
+	}
+
+	.mission-note {
+		max-width: 36rem;
+		margin: 1.5rem auto 0;
+		color: var(--text-2);
+	}
+
+	@media (max-width: 60rem) {
+		.groups {
+			grid-template-columns: 1fr;
+		}
+
+		.oss-body {
+			grid-template-columns: 1fr;
+		}
+
+		.rail {
+			display: none;
+		}
+	}
+
+	@media (max-width: 40rem) {
+		.hero-inner {
+			padding-top: 1.75rem;
+			padding-bottom: 1.75rem;
+		}
+
+		.hero-mark {
+			width: 3.75rem;
+			margin-bottom: 0.75rem;
+		}
+
+		.tile {
+			width: 4rem;
+			height: 4rem;
+			border-radius: 1rem;
+		}
+
+		.tile img {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+
+
+		.step :global(.step-name) {
+			font-size: 0.8125rem;
+		}
+
+
+		.metrics-inner {
+			justify-content: flex-start;
+			gap: 0.75rem 2rem;
+		}
 	}
 </style>

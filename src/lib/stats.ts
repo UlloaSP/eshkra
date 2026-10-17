@@ -1,6 +1,10 @@
 import type { Product } from '../data/products';
 
-export type Stats = { stars: number | null; monthlyDownloads: number | null };
+export type Stats = {
+	stars: number | null;
+	monthlyDownloads: number | null;
+	version: string | null;
+};
 
 // Runs at build time only. A failed request yields null so a flaky API never breaks a deploy.
 async function getJson<T>(url: string, headers: Record<string, string> = {}): Promise<T | null> {
@@ -40,14 +44,29 @@ async function getMonthlyDownloads(registry: Product['registry']): Promise<numbe
 	return data?.data.last_month ?? null;
 }
 
+async function getVersion(registry: Product['registry']): Promise<string | null> {
+	if (!registry) return null;
+	if (registry.type === 'npm') {
+		const data = await getJson<{ version: string }>(
+			'https://registry.npmjs.org/' + registry.name + '/latest',
+		);
+		return data?.version ?? null;
+	}
+	const data = await getJson<{ info: { version: string } }>(
+		'https://pypi.org/pypi/' + registry.name + '/json',
+	);
+	return data?.info.version ?? null;
+}
+
 export async function getStats(products: Product[]): Promise<Map<string, Stats>> {
 	const entries = await Promise.all(
 		products.map(async (p) => {
-			const [stars, monthlyDownloads] = await Promise.all([
+			const [stars, monthlyDownloads, version] = await Promise.all([
 				getStars(p.repo),
 				getMonthlyDownloads(p.registry),
+				getVersion(p.registry),
 			]);
-			return [p.id, { stars, monthlyDownloads }] as const;
+			return [p.id, { stars, monthlyDownloads, version }] as const;
 		}),
 	);
 	return new Map(entries);

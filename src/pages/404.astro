@@ -1,26 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <Base title="Not found — eshkra" description="This page does not exist.">
-	<section class="missing">
-		<h1>404</h1>
-		<p>This page does not exist. <a href="/">Back to eshkra.dev</a></p>
+	<section class="missing wrap" aria-labelledby="missing-title">
+		<p class="code mono">404</p>
+		<h1 id="missing-title">This page does not exist.</h1>
+		<a class="button" href="/">Back to eshkra.dev <Icon name="arrow-right" size={16} /></a>
 	</section>
 </Base>
 
 <style>
 	.missing {
-		padding: 8rem 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-top: clamp(5rem, 12vw, 9rem);
+		text-align: center;
+	}
+
+	.code {
+		margin: 0;
+		color: var(--ember-ink);
+		font-size: 0.875rem;
+		letter-spacing: 0.1em;
 	}
 
 	h1 {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: 4rem;
-	}
-
-	p {
-		color: var(--muted);
+		margin: 0.75rem 0 2rem;
+		font-size: clamp(2.25rem, 5vw, 3.5rem);
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 1.05;
 	}
 </style>

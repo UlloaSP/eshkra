@@ -1,0 +1,808 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T00:00:00Z",
+  "title": "Design System: eshkra",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Ground",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "bg-subtle": {
+        "role": "neutral",
+        "displayName": "Subtle Ground",
+        "canonical": "#f7f7f9",
+        "oklch": "oklch(97.7% 0.003 286)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f3f41",
+          "#5d5d5f",
+          "#808082",
+          "#a4a4a6",
+          "#cacacc",
+          "#eeeef0"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#e7e7ee",
+        "oklch": "oklch(93.0% 0.009 286)",
+        "tonalRamp": [
+          "#0b0b0f",
+          "#232328",
+          "#3f3f45",
+          "#5d5d63",
+          "#7f7f86",
+          "#a4a4aa",
+          "#cacad0",
+          "#eeeef5"
+        ]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "#d2d2dc",
+        "oklch": "oklch(86.7% 0.014 286)",
+        "tonalRamp": [
+          "#0b0a11",
+          "#23232a",
+          "#3f3f47",
+          "#5d5d65",
+          "#7f7f88",
+          "#a3a3ad",
+          "#c9c9d3",
+          "#ededf8"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0b0b10",
+        "oklch": "oklch(15.2% 0.011 285)",
+        "tonalRamp": [
+          "#0b0b10",
+          "#232329",
+          "#3f3f45",
+          "#5d5d64",
+          "#7f7f86",
+          "#a4a4ab",
+          "#c9cad1",
+          "#edeef6"
+        ]
+      },
+      "text-2": {
+        "role": "neutral",
+        "displayName": "Body Ink",
+        "canonical": "#474756",
+        "oklch": "oklch(40.4% 0.025 285)",
+        "tonalRamp": [
+          "#0a0a15",
+          "#232230",
+          "#3e3e4d",
+          "#5c5c6c",
+          "#7e7e8f",
+          "#a3a3b4",
+          "#c8c9db",
+          "#ecedff"
+        ]
+      },
+      "text-3": {
+        "role": "neutral",
+        "displayName": "Meta Ink",
+        "canonical": "#666675",
+        "oklch": "oklch(51.6% 0.023 286)",
+        "tonalRamp": [
+          "#0a0a15",
+          "#23222f",
+          "#3e3e4c",
+          "#5c5c6b",
+          "#7e7e8e",
+          "#a3a3b3",
+          "#c9c9da",
+          "#ecedfe"
+        ]
+      },
+      "ember": {
+        "role": "primary",
+        "displayName": "eshkra Ember",
+        "canonical": "#e8590c",
+        "oklch": "oklch(64.4% 0.192 42)",
+        "tonalRamp": [
+          "#220000",
+          "#4c0000",
+          "#7c0800",
+          "#ae1c00",
+          "#d84a00",
+          "#ff7233",
+          "#ffb596",
+          "#ffe7da"
+        ],
+        "note": "--ember-glow (light rgb(255 138 40 / 0.32), dark rgb(255 138 40 / 0.22)) is defined in Base.astro but currently unused."
+      },
+      "ember-ink": {
+        "role": "primary",
+        "displayName": "Ember Ink",
+        "canonical": "#c2410c",
+        "oklch": "oklch(55.3% 0.174 38)",
+        "tonalRamp": [
+          "#220000",
+          "#4d0000",
+          "#7d0200",
+          "#a92700",
+          "#d25022",
+          "#fd774c",
+          "#ffb399",
+          "#ffe6db"
+        ]
+      },
+      "button-bg": {
+        "role": "neutral",
+        "displayName": "Button Ink",
+        "canonical": "#0b0b10",
+        "oklch": "oklch(15.2% 0.011 285)",
+        "tonalRamp": [
+          "#0b0b10",
+          "#232329",
+          "#3f3f45",
+          "#5d5d64",
+          "#7f7f86",
+          "#a4a4ab",
+          "#c9cad1",
+          "#edeef6"
+        ]
+      },
+      "button-text": {
+        "role": "neutral",
+        "displayName": "Button Ink Text",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "bg-dark": {
+        "role": "neutral",
+        "displayName": "Ground (dark)",
+        "canonical": "#0a0a0d",
+        "oklch": "oklch(14.6% 0.006 286)",
+        "tonalRamp": [
+          "#0b0b0e",
+          "#242427",
+          "#3f3f43",
+          "#5d5d61",
+          "#808084",
+          "#a4a4a8",
+          "#cacacf",
+          "#eeeef3"
+        ]
+      },
+      "bg-subtle-dark": {
+        "role": "neutral",
+        "displayName": "Subtle Ground (dark)",
+        "canonical": "#111116",
+        "oklch": "oklch(18.0% 0.010 285)",
+        "tonalRamp": [
+          "#0b0b0f",
+          "#232329",
+          "#3f3f45",
+          "#5d5d63",
+          "#7f7f86",
+          "#a4a4ab",
+          "#cacad1",
+          "#edeef5"
+        ]
+      },
+      "surface-dark": {
+        "role": "neutral",
+        "displayName": "Surface (dark)",
+        "canonical": "#131318",
+        "oklch": "oklch(18.9% 0.010 285)",
+        "tonalRamp": [
+          "#0b0b0f",
+          "#232329",
+          "#3f3f45",
+          "#5d5d63",
+          "#7f7f86",
+          "#a4a4ab",
+          "#cacad1",
+          "#edeef5"
+        ]
+      },
+      "border-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (dark)",
+        "canonical": "#24242c",
+        "oklch": "oklch(26.4% 0.015 285)",
+        "tonalRamp": [
+          "#0a0a11",
+          "#23232b",
+          "#3f3f47",
+          "#5c5d66",
+          "#7f7f89",
+          "#a3a3ae",
+          "#c9c9d4",
+          "#ededf8"
+        ]
+      },
+      "border-strong-dark": {
+        "role": "neutral",
+        "displayName": "Strong Hairline (dark)",
+        "canonical": "#34343e",
+        "oklch": "oklch(32.9% 0.018 285)",
+        "tonalRamp": [
+          "#0a0a12",
+          "#23232c",
+          "#3f3f49",
+          "#5c5c67",
+          "#7f7f8b",
+          "#a3a3af",
+          "#c9c9d6",
+          "#ededfa"
+        ]
+      },
+      "text-dark": {
+        "role": "neutral",
+        "displayName": "Ink (dark)",
+        "canonical": "#f4f4f6",
+        "oklch": "oklch(96.8% 0.003 286)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f3f41",
+          "#5d5d5f",
+          "#808082",
+          "#a4a4a6",
+          "#cacacc",
+          "#eeeef0"
+        ]
+      },
+      "text-2-dark": {
+        "role": "neutral",
+        "displayName": "Body Ink (dark)",
+        "canonical": "#b6b6c2",
+        "oklch": "oklch(78.0% 0.017 286)",
+        "tonalRamp": [
+          "#0a0a12",
+          "#23232c",
+          "#3f3f48",
+          "#5c5c67",
+          "#7f7f8a",
+          "#a3a3af",
+          "#c9c9d5",
+          "#ededfa"
+        ]
+      },
+      "text-3-dark": {
+        "role": "neutral",
+        "displayName": "Meta Ink (dark)",
+        "canonical": "#8e8e9b",
+        "oklch": "oklch(65.1% 0.019 286)",
+        "tonalRamp": [
+          "#0a0a13",
+          "#23232d",
+          "#3f3e4a",
+          "#5c5c68",
+          "#7f7f8c",
+          "#a3a3b0",
+          "#c9c9d7",
+          "#ededfb"
+        ]
+      },
+      "ember-dark": {
+        "role": "primary",
+        "displayName": "eshkra Ember (dark)",
+        "canonical": "#ff8a3d",
+        "oklch": "oklch(75.0% 0.167 51)",
+        "tonalRamp": [
+          "#200000",
+          "#460d00",
+          "#6f2500",
+          "#9c3b00",
+          "#cb5b00",
+          "#f48031",
+          "#ffb689",
+          "#ffe6d3"
+        ]
+      },
+      "ember-ink-dark": {
+        "role": "primary",
+        "displayName": "Ember Ink (dark)",
+        "canonical": "#ff9a55",
+        "oklch": "oklch(77.8% 0.147 53)",
+        "tonalRamp": [
+          "#1f0000",
+          "#421300",
+          "#6d2700",
+          "#954300",
+          "#c2620f",
+          "#eb8841",
+          "#ffb47f",
+          "#ffe7d2"
+        ]
+      },
+      "button-bg-dark": {
+        "role": "neutral",
+        "displayName": "Button Ink (dark)",
+        "canonical": "#f4f4f6",
+        "oklch": "oklch(96.8% 0.003 286)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f3f41",
+          "#5d5d5f",
+          "#808082",
+          "#a4a4a6",
+          "#cacacc",
+          "#eeeef0"
+        ]
+      },
+      "button-text-dark": {
+        "role": "neutral",
+        "displayName": "Button Ink Text (dark)",
+        "canonical": "#0b0b10",
+        "oklch": "oklch(15.2% 0.011 285)",
+        "tonalRamp": [
+          "#0b0b10",
+          "#232329",
+          "#3f3f45",
+          "#5d5d64",
+          "#7f7f86",
+          "#a4a4ab",
+          "#c9cad1",
+          "#edeef6"
+        ]
+      },
+      "hue-mlbundle": {
+        "role": "secondary",
+        "displayName": "MLbundle Cobalt",
+        "canonical": "#2f6bff",
+        "oklch": "oklch(58.1% 0.229 264)",
+        "tonalRamp": [
+          "#01003d",
+          "#00007b",
+          "#001db5",
+          "#1249db",
+          "#3571ff",
+          "#74a1ff",
+          "#adcbff",
+          "#e3efff"
+        ],
+        "note": "Product marker only: hero tile shadow, incoming connector, group-head gradient stop. Never on a plate."
+      },
+      "hue-mlschema": {
+        "role": "secondary",
+        "displayName": "MLschema Gold",
+        "canonical": "#f2a516",
+        "oklch": "oklch(66.0% 0.172 248)",
+        "tonalRamp": [
+          "#00072f",
+          "#002452",
+          "#00417e",
+          "#0060af",
+          "#0084e0",
+          "#48abff",
+          "#9bd0ff",
+          "#dbf2ff"
+        ],
+        "note": "Product marker only: hero tile shadow, incoming connector, group-head gradient stop. Never on a plate."
+      },
+      "hue-mlform": {
+        "role": "secondary",
+        "displayName": "MLform Indigo",
+        "canonical": "#5b4cf5",
+        "oklch": "oklch(54.2% 0.240 279)",
+        "tonalRamp": [
+          "#090035",
+          "#1f0075",
+          "#3700b9",
+          "#4d34df",
+          "#6a67fc",
+          "#9098ff",
+          "#bec6ff",
+          "#e9edff"
+        ],
+        "note": "Product marker only: hero tile shadow, incoming connector, group-head gradient stop. Never on a plate."
+      },
+      "hue-mlsuite": {
+        "role": "secondary",
+        "displayName": "MLsuite Amber",
+        "canonical": "#f07a1e",
+        "oklch": "oklch(60.4% 0.228 300)",
+        "tonalRamp": [
+          "#120029",
+          "#32005f",
+          "#550098",
+          "#7623c7",
+          "#9950f0",
+          "#b885ff",
+          "#d4bcff",
+          "#f2e9ff"
+        ],
+        "note": "Product marker only: hero tile shadow, incoming connector, group-head gradient stop. Never on a plate."
+      },
+      "code-window": {
+        "role": "neutral",
+        "displayName": "Code Window",
+        "canonical": "#0b0b0d",
+        "oklch": "oklch(15.1% 0.004 286)",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#242426",
+          "#3f3f42",
+          "#5d5d60",
+          "#808083",
+          "#a4a4a7",
+          "#cacacd",
+          "#eeeef1"
+        ]
+      },
+      "plate-charcoal": {
+        "role": "neutral",
+        "displayName": "Plate Charcoal",
+        "canonical": "#19191c",
+        "oklch": "oklch(21.5% 0.006 286)",
+        "tonalRamp": [
+          "#0b0b0e",
+          "#242427",
+          "#3f3f43",
+          "#5d5d61",
+          "#808084",
+          "#a4a4a8",
+          "#cacace",
+          "#eeeef2"
+        ],
+        "note": "Middle stop of the plate ground radial: #2b2b2f 0%, #19191c 55%, #0e0e10 100%."
+      },
+      "plate-core": {
+        "role": "primary",
+        "displayName": "Plate Core",
+        "canonical": "#ff7a1a",
+        "oklch": "oklch(72.4% 0.187 49)",
+        "tonalRamp": [
+          "#200000",
+          "#470c00",
+          "#702300",
+          "#9d3a00",
+          "#d35200",
+          "#fe7918",
+          "#ffb58a",
+          "#ffe7d6"
+        ],
+        "note": "Hot stop of the plate ember radial: #fff1d2 0%, #ffb547 5%, #ff7a1a 12%, rgb(232 89 12 / 0.6) 22%, rgb(140 46 8 / 0.3) 38%, transparent 60%. Below it: repeating-linear-gradient(118deg, rgb(255 170 110 / 0.09) 0 2px, transparent 2px 16px) and a beam linear-gradient(118deg, transparent 30%, rgb(255 138 60 / 0.16) 48%, transparent 66%), above the charcoal radial. Core positions (--gx/--gy): mlbundle 88%/12%, mlschema 10%/90%, mlform 92%/88%, mlsuite 8%/10%."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero headline only; key phrase in ember."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Product panel headlines."
+      },
+      "statement": {
+        "displayName": "Statement",
+        "purpose": "The mission line, text-3 with its resolving sentence in text."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Hero sub-line."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text."
+      },
+      "brand-wordmark": {
+        "displayName": "eshkra Wordmark",
+        "purpose": "The umbrella name beside the eshkra mark in the nav (width 110% at display size in the footer band)."
+      },
+      "wordmark-ml": {
+        "displayName": "Wordmark ML",
+        "purpose": "The wide heavy \"ML\" of every visible product name."
+      },
+      "wordmark-rest": {
+        "displayName": "Wordmark Rest",
+        "purpose": "The light lowercase rest of every visible product name (bundle, schema, form, suite)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Mono technical labels: metrics captions, stage labels, badges, facts, window titles."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Shiki github-dark-default snippets on the dark code window."
+      }
+    },
+    "shadows": [
+      {
+        "name": "button-lift",
+        "value": "0 10px 24px -10px rgb(0 0 0 / 0.35)",
+        "purpose": "Primary-button hover, with translateY(-1px)."
+      },
+      {
+        "name": "tile-rest",
+        "value": "0 12px 28px -14px color-mix(in oklab, var(--hue) 55%, transparent), 0 2px 6px rgb(0 0 0 / 0.06)",
+        "purpose": "Hero mark tiles, tinted by the product hue."
+      },
+      {
+        "name": "tile-hover",
+        "value": "0 18px 34px -14px color-mix(in oklab, var(--hue) 70%, transparent), 0 2px 6px rgb(0 0 0 / 0.08)",
+        "purpose": "Hero tile hover, with translateY(-4px)."
+      },
+      {
+        "name": "window",
+        "value": "0 24px 48px -20px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.25)",
+        "purpose": "The code window on its product plate."
+      },
+      {
+        "name": "ghost-ring",
+        "value": "inset 0 0 0 1px var(--border-strong)",
+        "purpose": "Ghost-button ring; hover uses var(--text-3)."
+      },
+      {
+        "name": "nav-glass",
+        "value": "background: color-mix(in oklab, var(--bg) 82%, transparent); backdrop-filter: saturate(1.4) blur(14px)",
+        "purpose": "Sticky nav material."
+      },
+      {
+        "name": "plate-grain",
+        "value": "SVG fractalNoise (baseFrequency 0.9, 2 octaves) at opacity 0.55, mix-blend-mode soft-light",
+        "purpose": "Grain overlay on every code plate."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All state transitions and the connector draw."
+      },
+      {
+        "name": "button-transition",
+        "value": "280ms",
+        "purpose": "Button shadow and lift."
+      },
+      {
+        "name": "tile-transition",
+        "value": "320ms",
+        "purpose": "Hero tile lift and shadow."
+      },
+      {
+        "name": "item-transition",
+        "value": "220ms",
+        "purpose": "Index item background wash."
+      },
+      {
+        "name": "connector-draw",
+        "value": "700ms scaleX from 0, delay calc(var(--i) * 140ms + 250ms)",
+        "purpose": "The one motion moment: hero connectors draw in once on load."
+      },
+      {
+        "name": "rail-observer",
+        "value": "IntersectionObserver, rootMargin '-45% 0px -50% 0px', sets aria-current=\"location\" on the rail link of the panel crossing mid-viewport; the page's only JavaScript",
+        "purpose": "Signature rail: current entry ember-ink on a 12% ember wash with its mark at full opacity; without JavaScript every entry stays a plain link."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disables connector draw, tile and rail transitions, button lift and smooth scroll."
+      },
+      {
+        "name": "rail-transition",
+        "value": "240ms",
+        "purpose": "Rail entry colour, background and mark opacity."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "nav-compact",
+        "value": "30rem",
+        "purpose": "Below: nav keeps brand, GitHub and the small button only."
+      },
+      {
+        "name": "tiles-small",
+        "value": "40rem",
+        "purpose": "Below: hero tiles 4rem, metrics strip left-aligned."
+      },
+      {
+        "name": "footer-two-col",
+        "value": "48rem",
+        "purpose": "Below: footer link grid in two columns."
+      },
+      {
+        "name": "stack",
+        "value": "60rem",
+        "purpose": "Below: nav drops product links; index and panels stack; rail hidden."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Product Wordmark",
+      "kind": "custom",
+      "refersTo": "wordmark-ml",
+      "description": "The binding lockup for every visible product name: wide heavy ML, light lowercase rest.",
+      "html": "<span style=\"font-size:1.625rem; letter-spacing:-0.02em; color: var(--text)\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">schema</span></span></span>",
+      "css": ".ds-wordmark { white-space: nowrap; font-family: var(--font-sans); } .ds-wordmark .ds-ml { font-weight: 800; font-stretch: 125%; letter-spacing: -0.01em; } .ds-wordmark .ds-rest { font-weight: 300; font-stretch: 100%; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink pill that inverts with the theme; panel actions such as Read the docs.",
+      "html": "<a class=\"ds-btn\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z\"/><path d=\"M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z\"/></svg> Read the docs</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 999px; background: var(--button-bg); color: var(--button-text); font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem; line-height: 1.2; text-decoration: none; transition: box-shadow 280ms var(--ease-out), transform 280ms var(--ease-out); } .ds-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.35); } .ds-btn:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action beside a primary; inset hairline ring.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"/></svg> GitHub</a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 999px; background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--border-strong); font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem; line-height: 1.2; text-decoration: none; transition: box-shadow 280ms var(--ease-out); } .ds-btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--text-3); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Sticky glass nav: eshkra wordmark, Projects and product wordmarks, GitHub, and the small Try MLsuite button, the first viewport's only call to action.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">eshkra</a><nav class=\"ds-links\"><a href=\"#\">Projects</a><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">bundle</span></span></a><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">schema</span></span></a><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">form</span></span></a><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">suite</span></span></a></nav><a class=\"ds-btn ds-btn-small\" href=\"#\">Try <span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">suite</span></span> <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a></header>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 2rem; height: 4rem; padding: 0 1.5rem; background: color-mix(in oklab, var(--bg) 82%, transparent); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--border); font-family: var(--font-sans); } .ds-brand { font-size: 1.25rem; font-weight: 760; font-stretch: 108%; letter-spacing: -0.03em; color: var(--text); text-decoration: none; } .ds-links { display: flex; gap: 1.5rem; font-size: 0.9375rem; } .ds-links a { color: var(--text-2); text-decoration: none; } .ds-links a:hover { color: var(--text); } .ds-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 999px; background: var(--button-bg); color: var(--button-text); font-family: var(--font-sans); font-weight: 600; font-size: 0.9375rem; line-height: 1.2; text-decoration: none; transition: box-shadow 280ms var(--ease-out), transform 280ms var(--ease-out); } .ds-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.35); } .ds-btn:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; } .ds-btn-small { margin-left: auto; padding: 0.5rem 0.875rem; font-size: 0.875rem; } .ds-wordmark { white-space: nowrap; font-family: var(--font-sans); } .ds-wordmark .ds-ml { font-weight: 800; font-stretch: 125%; letter-spacing: -0.01em; } .ds-wordmark .ds-rest { font-weight: 300; font-stretch: 100%; } a:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Version Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Mono version and maturity pill beside a panel lockup.",
+      "html": "<span class=\"ds-badge\">v0.2.1 · pre-alpha</span>",
+      "css": ".ds-badge { display: inline-block; padding: 0.1875rem 0.5rem; border: 1px solid var(--border-strong); border-radius: 999px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-2); }"
+    },
+    {
+      "name": "Install Line",
+      "kind": "custom",
+      "refersTo": "install-line",
+      "description": "Copyable install command in package spelling, with a muted unselectable prompt.",
+      "html": "<p class=\"ds-install\"><span class=\"ds-prompt\" aria-hidden=\"true\">$</span>pip install mlschema</p>",
+      "css": ".ds-install { display: inline-flex; gap: 0.75rem; margin: 0; padding: 0.625rem 1rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-subtle); color: var(--text); font-family: var(--font-mono); font-size: 0.875rem; user-select: all; } .ds-prompt { color: var(--text-3); user-select: none; }"
+    },
+    {
+      "name": "Hero Tile",
+      "kind": "card",
+      "refersTo": "hero-tile",
+      "description": "App-icon tile for a product mark on the hero path, its shadow tinted by the product hue, wordmark beneath.",
+      "html": "<div class=\"ds-step\" style=\"--hue: var(--hue-mlschema)\"><a class=\"ds-tile\" href=\"#\"><span class=\"ds-tile-mark\"></span></a><span class=\"ds-step-name\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">schema</span></span></span><span class=\"ds-step-stage\">Describe</span></div>",
+      "css": ".ds-step { display: inline-flex; flex-direction: column; align-items: center; gap: 0.25rem; font-family: var(--font-sans); color: var(--text); } .ds-tile { display: grid; place-items: center; width: 6.5rem; height: 6.5rem; margin-bottom: 0.75rem; border: 1px solid var(--border); border-radius: 1.5rem; background: var(--surface); box-shadow: 0 12px 28px -14px color-mix(in oklab, var(--hue) 55%, transparent), 0 2px 6px rgb(0 0 0 / 0.06); transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out); } .ds-tile:hover { transform: translateY(-4px); box-shadow: 0 18px 34px -14px color-mix(in oklab, var(--hue) 70%, transparent), 0 2px 6px rgb(0 0 0 / 0.08); } .ds-tile:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; } .ds-tile-mark { width: 4rem; height: 4rem; border-radius: 1rem; background: linear-gradient(140deg, var(--hue-mlbundle), var(--hue-mlsuite)); } .ds-step-name { font-size: 1.0625rem; } .ds-step-stage { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); } .ds-wordmark { white-space: nowrap; font-family: var(--font-sans); } .ds-wordmark .ds-ml { font-weight: 800; font-stretch: 125%; letter-spacing: -0.01em; } .ds-wordmark .ds-rest { font-weight: 300; font-stretch: 100%; }"
+    },
+    {
+      "name": "Product Plate with Code Window",
+      "kind": "card",
+      "refersTo": "code-window",
+      "description": "The eshkra mark's material: a grained charcoal plate with warm diagonal lines, a soft beam and an ember core (position varies per panel), holding the always-dark code window.",
+      "html": "<figure class=\"ds-plate\" style=\"--gx: 88%; --gy: 12%\"><div class=\"ds-window\"><div class=\"ds-bar\"><span class=\"ds-dots\"><i></i><i></i><i></i></span><span class=\"ds-title\">form.ts</span></div><pre class=\"ds-code\">mountForm(el, schema)</pre></div></figure>",
+      "css": ".ds-plate { position: relative; margin: 0; padding: 2rem; border-radius: 18px; overflow: hidden; isolation: isolate; background: radial-gradient(circle at var(--gx) var(--gy), #fff1d2 0%, #ffb547 5%, #ff7a1a 12%, rgb(232 89 12 / 0.6) 22%, rgb(140 46 8 / 0.3) 38%, transparent 60%), repeating-linear-gradient(118deg, rgb(255 170 110 / 0.09) 0 2px, transparent 2px 16px), linear-gradient(118deg, transparent 30%, rgb(255 138 60 / 0.16) 48%, transparent 66%), radial-gradient(130% 100% at var(--gx) var(--gy), #2b2b2f 0%, #19191c 55%, #0e0e10 100%); } .ds-plate::after { content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0.55; mix-blend-mode: soft-light; background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\"); } .ds-window { position: relative; border-radius: 12px; overflow: hidden; background: #0b0b0d; border: 1px solid rgb(255 255 255 / 0.1); box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.25); } .ds-bar { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; border-bottom: 1px solid rgb(255 255 255 / 0.08); } .ds-dots { display: inline-flex; gap: 0.375rem; } .ds-dots i { width: 0.625rem; height: 0.625rem; border-radius: 50%; background: rgb(255 255 255 / 0.18); } .ds-title { font-family: var(--font-mono); font-size: 0.75rem; color: rgb(255 255 255 / 0.6); } .ds-code { margin: 0; padding: 1.25rem 1.25rem 1.5rem; font-family: var(--font-mono); font-size: 0.78125rem; line-height: 1.7; color: #e6edf3; }"
+    },
+    {
+      "name": "Product Rail",
+      "kind": "nav",
+      "refersTo": "rail-item",
+      "description": "Sticky rail beside the panels; a small IntersectionObserver sets aria-current on the entry whose panel is mid-viewport, which turns ember-ink on a 12% ember wash. Plain links without JavaScript.",
+      "html": "<ul class=\"ds-rail\"><li><a aria-current=\"location\" href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">bundle</span></span></a></li><li><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">schema</span></span></a></li><li><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">form</span></span></a></li><li><a href=\"#\"><span class=\"ds-wordmark\"><span class=\"ds-ml\">ML</span><span class=\"ds-rest\">suite</span></span></a></li></ul>",
+      "css": ".ds-rail { display: flex; flex-direction: column; gap: 0.25rem; width: 10rem; margin: 0; padding: 0; list-style: none; font-family: var(--font-sans); } .ds-rail a { display: flex; align-items: center; gap: 0.625rem; padding: 0.5rem 0.625rem; border-radius: 8px; font-weight: 550; color: var(--text-2); text-decoration: none; transition: color 240ms var(--ease-out), background-color 240ms var(--ease-out); } .ds-rail a:hover { background: var(--bg-subtle); } .ds-rail a[aria-current] { color: var(--ember-ink); background: color-mix(in oklab, var(--ember) 12%, transparent); } .ds-rail a:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; } .ds-wordmark { white-space: nowrap; font-family: var(--font-sans); } .ds-wordmark .ds-ml { font-weight: 800; font-stretch: 125%; letter-spacing: -0.01em; } .ds-wordmark .ds-rest { font-weight: 300; font-stretch: 100%; } @media (prefers-reduced-motion: reduce) { .ds-rail a { transition: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Family Index",
+    "overview": "eshkra.dev is a multi-product open-source company page built to the category standard, at the craft bar of voidzero.dev, hashicorp.com, astral.sh and tanstack.com (the user's explicit canon choice). One umbrella brand frames four products that each feel like a product: the umbrella speaks in neutral ground, near-black ink and eshkra's ember, and the products speak through their own marks, graphite ribbons around an ember orb that share the eshkra mark's material, and the wordmark lockup. Products are shown first as a family index, then each opens into one large panel with real code.\n\nThe ground is quiet: white or near-black following the visitor's system, hairline borders, soft 12px corners, generous whitespace and one typeface family doing almost everything. Colour is rationed into two materials. Ember is eshkra's material: the key headline phrase, focus, selection, the active rail item, and the glowing core of every code plate, which borrows the eshkra mark's dark petals around an ember core. The product hues are the products' colour and stay small: hero tile shadows, connectors and family group heads. Light and dark are the same design, not two moods.\n\nThe bespoke \"pre-printed form\" direction was explicitly rejected by the user, as were generic AI-startup glow, an academic register, heavy animation and SaaS-template sameness.",
+    "keyCharacteristics": [
+      "Neutral ground with hairline borders; the same layout and hierarchy in light and dark.",
+      "Ember is the brand material; product hues stay on product markers (tile shadows, connectors, group heads).",
+      "Mona Sans for all text, its width axis widened on display; JetBrains Mono for code and small technical labels.",
+      "Every visible product name is the wordmark lockup: wide heavy \"ML\", light lowercase rest.",
+      "Product marks as app-icon tiles and inline icons. They are the maintainer's final transparent PNGs (about 960px), so larger uses are open.",
+      "Code always on a dark window, set on a grained charcoal plate with an ember core, the eshkra mark's material.",
+      "Restrained motion: one CSS draw-in on load and a rail that marks the panel in view with one small script; nothing else moves on its own."
+    ],
+    "rules": [
+      {
+        "name": "The Two Voices Rule",
+        "body": "Ember is eshkra's material; product hues are product markers. Plates, focus, selection and the active rail state are ember for every product alike. A product hue appears only on its own tile shadow, its connector and its group-head stop, and never colours chrome (nav, buttons, footer, body text) or a plate.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ember Material Rule",
+        "body": "Ember is not a rare accent; it is the brand material of every code plate, glowing from a core whose position shifts per panel. As flat colour it stays on one headline phrase per view and on interaction states, and it never fills a button. `--ember-glow` exists in the token set but is currently unused; do not treat it as a sanctioned effect until a surface needs it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Button Rule",
+        "body": "The primary action is ink, not accent: near-black on light, near-white on dark.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Mona Sans sets every word that is not code or a technical label. Display weight comes from 700 plus the width axis (104 to 110%), never from a second display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Wordmark Lockup Rule",
+        "body": "Every visible product name is the lockup, never plain text: \"ML\" in Mona Sans at width 125% and weight 800, followed by the lowercase rest of the name (bundle, schema, form, suite) at normal width and weight 300, unbroken (no wrap). It is one shared component and applies to nav links, the nav button (\"Try MLsuite\"), hero tiles, family-index items, the rail, panel identity rows and footer links. Only code, install commands and URLs keep the package spelling. This is a binding brand rule from the user.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Means Technical Rule",
+        "body": "Mono is for install lines, code, versions, counts' captions and stage labels. Headings, buttons and prose are never mono.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Shadow Rule",
+        "body": "Every shadow is blurred with a negative spread. No hard offset shadows, no glow halos around text.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Lit Plate Rule",
+        "body": "Every code plate is the eshkra mark's material, layered top to bottom: an ember core radial (#fff1d2, #ffb547, #ff7a1a, rgb(232 89 12 / 0.6), rgb(140 46 8 / 0.3), transparent at 60%) centred at `--gx`/`--gy`; fine 118deg diagonal lines in the mark's warm light (rgb(255 170 110 / 0.09), 2px every 16px); a soft 118deg beam (rgb(255 138 60 / 0.16) peaking at 48%, clear by 30% and 66%); then a charcoal radial ground (#2b2b2f to #19191c to #0e0e10). SVG fractal noise sits over it at 0.55 opacity in soft-light. The core moves per panel so adjacent plates never repeat: mlbundle 88%/12%, mlschema 10%/90%, mlform 92%/88%, mlsuite 8%/10%. The plate is the only textured surface in the system, looks the same in light and dark, and never takes a product hue.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** follow `prefers-color-scheme` and ship the same layout and hierarchy in light and dark, swapping only the paired tokens.",
+      "**Do** set every visible product name with the shared wordmark lockup (\"ML\" 800 at width 125%, rest 300 at width 100%); keep package spelling only in code, install commands and URLs.",
+      "**Do** use ember as eshkra's material: the code plate core, one headline phrase, focus outline (2px, 3px offset), selection, the active rail item and hover underlines; use `ember-ink` for small accented text.",
+      "**Do** keep each product hue on its own product markers: its tile shadow, its connector, its group-header stop.",
+      "**Do** give each new panel's plate its own ember core position so adjacent plates never repeat.",
+      "**Do** set code with Astro's `<Code>` and Shiki `github-dark-default` on the dark code window, with snippets taken from the project READMEs.",
+      "**Do** use the marks from `src/assets/marks` and `src/assets/brand` through Astro's image pipeline; all five are the maintainer's final transparent PNGs. A vector version would let them go beyond hero scale.",
+      "**Do** use the inline Lucide-grid stroke icons (24px grid, 2px stroke, round caps) and the filled GitHub mark at 14 to 20px.",
+      "**Do** keep the page static by default: motion in CSS, gated by `prefers-reduced-motion`; the rail's observer is the only script, and every enhancement leaves a complete no-JavaScript state."
+    ],
+    "donts": [
+      "**Don't** return to the rejected pre-printed form direction, generic AI-startup glow, an academic register, heavy animation or a SaaS template.",
+      "**Don't** fill buttons or flat areas with ember (as area it appears only as the plate's glowing core), and don't put product hues on plates, nav, footer, buttons or body text.",
+      "**Don't** write a product name as plain text outside code, install commands and URLs, and don't rebuild the lockup by hand; use the shared component.",
+      "**Don't** add a second display face or set headings in mono.",
+      "**Don't** use hard offset shadows or text glows; shadows stay soft and negative-spread.",
+      "**Don't** recolour, crop or flatten the marks; their graphite and ember glow are the brand.",
+      "**Don't** add small labels or kickers above headings; headings stand on their own."
+    ]
+  }
+}

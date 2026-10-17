@@ -9,7 +9,7 @@ export default defineConfig({
 		useTabs: true,
 		singleQuote: true,
 		printWidth: 100,
-		ignorePatterns: ['dist', '.astro', 'node_modules', 'pnpm-lock.yaml'],
+		ignorePatterns: ['dist', '.astro', '.impeccable', 'node_modules', 'pnpm-lock.yaml'],
 	},
 	lint: {
 		ignorePatterns: ['dist', '.astro', 'node_modules'],

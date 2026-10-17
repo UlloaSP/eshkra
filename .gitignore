@@ -25,3 +25,8 @@ pnpm-debug.log*
 
 # wrangler local state
 .wrangler/
+
+# impeccable working files (decision pages, review captures); surface briefs stay tracked
+.impeccable/*
+!.impeccable/surfaces/
+!.impeccable/design.json

@@ -1,0 +1,309 @@
+---
+import { Image } from 'astro:assets';
+import { Code } from 'astro:components';
+import type { Product } from '../data/products';
+import { formatCount, type Stats } from '../lib/stats';
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import { marks } from './marks';
+
+interface Props {
+	product: Product;
+	stats?: Stats;
+}
+
+const { product: p, stats } = Astro.props;
+const host = (href: string) => href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Boolean).join(' · ');
+---
+
+<article
+	class="panel"
+	id={p.id}
+	aria-labelledby={`${p.id}-title`}
+>
+	<div class="panel-text">
+		<div class="identity">
+			<Image src={marks[p.id]} alt="" width={44} densities={[1, 2]} class="mark" />
+			<Wordmark id={p.id} class="lockup" />
+			{versionLabel && <span class="badge mono">{versionLabel}</span>}
+		</div>
+
+		<h3 class="title" id={`${p.id}-title`}>{p.headline}</h3>
+		<p class="description">{p.description}</p>
+
+		{
+			p.install && (
+				<p class="install mono">
+					<span class="prompt" aria-hidden="true">
+						$
+					</span>
+					{p.install}
+				</p>
+			)
+		}
+
+		<div class="actions">
+			{
+				p.app && (
+					<a class="button" href={p.app}>
+						Open {host(p.app)} <Icon name="arrow-up-right" size={14} />
+					</a>
+				)
+			}
+			{
+				p.docs && (
+					<a class="button" href={p.docs}>
+						<Icon name="book" size={16} /> Read the docs
+					</a>
+				)
+			}
+			<a class="button ghost" href={`https://github.com/${p.repo}`}>
+				<Icon name="github" size={16} /> GitHub
+			</a>
+		</div>
+
+		<ul class="facts mono">
+			{
+				stats?.stars != null && (
+					<li>
+						<Icon name="star" size={14} /> {formatCount(stats.stars)}{' '}
+						{stats.stars === 1 ? 'star' : 'stars'}
+					</li>
+				)
+			}
+			{
+				stats?.monthlyDownloads != null && (
+					<li>
+						<Icon name="download" size={14} /> {formatCount(stats.monthlyDownloads)} downloads / mo
+					</li>
+				)
+			}
+			<li>
+				<Icon name="code" size={14} /> {p.language}
+			</li>
+			<li>
+				<Icon name="scale" size={14} /> MIT
+			</li>
+		</ul>
+	</div>
+
+	<figure class="panel-visual">
+		<div class="window">
+			<div class="window-bar">
+				<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+				<span class="window-title mono">{p.snippet.title}</span>
+			</div>
+			<Code code={p.snippet.code} lang={p.snippet.lang} theme="github-dark-default" class="code" />
+		</div>
+		<figcaption class="visually-hidden">Example from the {p.name} README</figcaption>
+	</figure>
+</article>
+
+<style>
+	.panel {
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.25fr);
+		gap: clamp(2rem, 3.5vw, 3rem);
+		align-items: center;
+		padding: clamp(3rem, 6vw, 4.5rem) 0;
+		border-top: 1px solid var(--border);
+	}
+
+	.identity {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.mark {
+		width: 2.75rem;
+		height: 2.75rem;
+		object-fit: contain;
+	}
+
+	.identity :global(.lockup) {
+		font-size: 1.625rem;
+		letter-spacing: -0.02em;
+	}
+
+	.badge {
+		padding: 0.1875rem 0.5rem;
+		border: 1px solid var(--border-strong);
+		border-radius: 999px;
+		font-size: 0.75rem;
+		color: var(--text-2);
+	}
+
+	.title {
+		margin: 1.5rem 0 0;
+		font-size: clamp(1.875rem, 3.4vw, 2.75rem);
+		font-weight: 700;
+		font-stretch: 104%;
+		line-height: 1.05;
+		letter-spacing: -0.035em;
+	}
+
+	.description {
+		margin: 1rem 0 0;
+		max-width: 34rem;
+		color: var(--text-2);
+		font-size: 1.0625rem;
+	}
+
+	.install {
+		display: inline-flex;
+		gap: 0.75rem;
+		margin: 1.5rem 0 0;
+		padding: 0.625rem 1rem;
+		border: 1px solid var(--border);
+		border-radius: 10px;
+		background: var(--bg-subtle);
+		font-size: 0.875rem;
+		user-select: all;
+	}
+
+	.prompt {
+		color: var(--text-3);
+		user-select: none;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
+	}
+
+	.facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.25rem;
+		margin: 1.75rem 0 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.8125rem;
+		color: var(--text-3);
+	}
+
+	.facts li {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	/*
+	 * The eshkra mark's material behind every code window: grained charcoal like its petals,
+	 * lit by an ember core. The core moves per panel so the four plates do not repeat.
+	 */
+	.panel-visual {
+		--gx: 88%;
+		--gy: 12%;
+		position: relative;
+		margin: 0;
+		padding: clamp(1.25rem, 3vw, 2.25rem);
+		border-radius: calc(var(--radius) * 1.5);
+		overflow: hidden;
+		isolation: isolate;
+		background:
+			radial-gradient(
+				circle at var(--gx) var(--gy),
+				#fff1d2 0%,
+				#ffb547 5%,
+				#ff7a1a 12%,
+				rgb(232 89 12 / 0.6) 22%,
+				rgb(140 46 8 / 0.3) 38%,
+				transparent 60%
+			),
+			repeating-linear-gradient(
+				118deg,
+				rgb(255 170 110 / 0.09) 0 2px,
+				transparent 2px 16px
+			),
+			linear-gradient(
+				118deg,
+				transparent 30%,
+				rgb(255 138 60 / 0.16) 48%,
+				transparent 66%
+			),
+			radial-gradient(130% 100% at var(--gx) var(--gy), #2b2b2f 0%, #19191c 55%, #0e0e10 100%);
+	}
+
+	#mlschema .panel-visual {
+		--gx: 10%;
+		--gy: 90%;
+	}
+
+	#mlform .panel-visual {
+		--gx: 92%;
+		--gy: 88%;
+	}
+
+	#mlsuite .panel-visual {
+		--gx: 8%;
+		--gy: 10%;
+	}
+
+	.panel-visual::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		opacity: 0.55;
+		mix-blend-mode: soft-light;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	.window {
+		border-radius: var(--radius);
+		overflow: hidden;
+		background: #0b0b0d;
+		border: 1px solid rgb(255 255 255 / 0.1);
+		box-shadow:
+			0 24px 48px -20px rgb(0 0 0 / 0.55),
+			0 2px 6px rgb(0 0 0 / 0.25);
+	}
+
+	.window-bar {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid rgb(255 255 255 / 0.08);
+	}
+
+	.dots {
+		display: inline-flex;
+		gap: 0.375rem;
+	}
+
+	.dots i {
+		width: 0.625rem;
+		height: 0.625rem;
+		border-radius: 50%;
+		background: rgb(255 255 255 / 0.18);
+	}
+
+	.window-title {
+		font-size: 0.75rem;
+		color: rgb(255 255 255 / 0.6);
+	}
+
+	.window :global(.code) {
+		margin: 0;
+		padding: 1.25rem 1.25rem 1.5rem;
+		background: transparent !important;
+		font-family: var(--font-mono);
+		font-size: 0.78125rem;
+		line-height: 1.7;
+		overflow-x: auto;
+		scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+	}
+
+	@media (max-width: 60rem) {
+		.panel {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
