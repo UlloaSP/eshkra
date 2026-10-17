@@ -6,14 +6,22 @@ import Icon from '../components/Icon.astro';
 import Wordmark from '../components/Wordmark.astro';
 import eshkraMark from '../assets/brand/eshkra.png';
 import { products } from '../data/products';
+import { site } from '../data/site';
 
 interface Props {
 	title: string;
 	description: string;
+	/** Title for link previews and social cards; the tab keeps `title`. */
+	shareTitle?: string;
+	/** schema.org JSON-LD for this page. */
+	structuredData?: object;
+	/** Error and utility pages stay out of search results. */
+	noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, shareTitle = title, structuredData, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
 const year = new Date().getFullYear();
 ---
 
@@ -24,18 +32,32 @@ const year = new Date().getFullYear();
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<link rel="canonical" href={canonical} />
+		{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+		<link rel="sitemap" href="/sitemap.xml" />
+		<link rel="alternate" type="text/plain" href="/llms.txt" title="eshkra for language models" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="color-scheme" content="light dark" />
 		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 		<meta name="theme-color" content="#0a0a0d" media="(prefers-color-scheme: dark)" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<meta name="keywords" content={site.keywords.join(', ')} />
+		<meta name="author" content={site.name} />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content={title} />
+		<meta property="og:site_name" content={site.name} />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:title" content={shareTitle} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
-		<meta property="og:image" content={new URL('/icon-512.png', Astro.site)} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="eshkra: open-source tooling for machine-learning models people can use" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={shareTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		{structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>

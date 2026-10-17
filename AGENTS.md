@@ -79,6 +79,7 @@ Before calling a change done, walk this list and say which entries applied:
 
 - `src/data/products.ts` - the projects and everything shown about them.
 - `src/lib/stats.ts` - build-time star and download counts.
+- `src/data/site.ts` - SEO: description, keywords, schema.org JSON-LD and the `llms.txt` text, all derived from `products.ts`. `src/pages/sitemap.xml.ts` and `src/pages/llms.txt.ts` serve them; `public/robots.txt` welcomes search engines and AI agents; `public/og.png` is the social card.
 - `src/layouts/Base.astro` - document head, header, footer and the design tokens as CSS variables.
 - `src/components/` - page sections and product cards.
 - `src/pages/` - routes.

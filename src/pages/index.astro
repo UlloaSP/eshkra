@@ -8,6 +8,7 @@ import { marks } from '../components/marks';
 import eshkraMark from '../assets/brand/eshkra.png';
 import { applications, libraries, products } from '../data/products';
 import { formatCount, getStats, sum } from '../lib/stats';
+import { site, structuredData } from '../data/site';
 
 const stats = await getStats(products);
 const totalStars = sum([...stats.values()].map((s) => s.stars));
@@ -32,8 +33,10 @@ const groups = [
 ---
 
 <Base
-	title="eshkra"
-	description="Package a trained model, describe its inputs, render the form and collect feedback. MLbundle, MLschema, MLform and MLsuite, all MIT licensed."
+	title="eshkra · Open-source ML tooling"
+	shareTitle={`eshkra — ${site.tagline}`}
+	description={site.description}
+	structuredData={structuredData(Object.fromEntries([...stats].map(([id, s]) => [id, s.version])))}
 >
 	<div class="first-screen">
 	<section class="hero" aria-labelledby="hero-title">
