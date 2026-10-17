@@ -48,3 +48,10 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Smoke test
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        # Retries cover the certificate and edge propagation after a first deploy.
+        run: |
+          curl -fsS --retry 10 --retry-delay 15 --retry-all-errors -m 20 -o page.html https://eshkra.dev/
+          grep -q '<title>eshkra' page.html
