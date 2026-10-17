@@ -1,0 +1,114 @@
+---
+import type { Product } from '../data/products';
+import { formatCount, type Stats } from '../lib/stats';
+
+interface Props {
+	product: Product;
+	stats?: Stats;
+	index: number;
+}
+
+const { product, stats, index } = Astro.props;
+const step = String(index + 1).padStart(2, '0');
+---
+
+<article class="card" id={product.id}>
+	<p class="stage"><span>{step}</span> {product.stage}</p>
+	<h3>{product.name}</h3>
+	<p class="tagline">{product.tagline}</p>
+	<p class="description">{product.description}</p>
+
+	{product.install && <code class="install">{product.install}</code>}
+
+	<ul class="meta">
+		<li>{product.language}</li>
+		<li>{product.kind === 'app' ? 'Application' : 'Library'}</li>
+		{stats?.stars != null && <li>★ {formatCount(stats.stars)}</li>}
+		{!!stats?.monthlyDownloads && <li>{formatCount(stats.monthlyDownloads)}/mo</li>}
+	</ul>
+
+	<div class="links">
+		{product.links.map((link) => <a href={link.href}>{link.label}</a>)}
+		<a href={`https://github.com/${product.repo}`}>GitHub</a>
+	</div>
+</article>
+
+<style>
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 0.75rem;
+	}
+
+	.stage {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--muted);
+	}
+
+	.stage span {
+		color: var(--accent);
+	}
+
+	h3 {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 1.35rem;
+		letter-spacing: -0.02em;
+	}
+
+	.tagline {
+		margin: 0;
+		font-weight: 500;
+	}
+
+	.description {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.95rem;
+		flex: 1;
+	}
+
+	.install {
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--border);
+		border-radius: 0.5rem;
+		background: var(--bg);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.825rem;
+		color: var(--muted);
+	}
+
+	.links {
+		display: flex;
+		gap: 1rem;
+		font-size: 0.925rem;
+		font-weight: 500;
+	}
+
+	.links a {
+		text-decoration-color: var(--border);
+		text-underline-offset: 0.25em;
+	}
+
+	.links a:hover {
+		text-decoration-color: var(--accent);
+	}
+</style>

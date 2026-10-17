@@ -1,0 +1,143 @@
+---
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="canonical" href={canonical} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="color-scheme" content="dark light" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="wordmark" href="/">eshkra</a>
+			<nav aria-label="Main">
+				<a href="/#open-source">Open source</a>
+				<a href="https://github.com/UlloaSP">GitHub</a>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<span>© {new Date().getFullYear()} eshkra</span>
+			<a href="https://github.com/UlloaSP">github.com/UlloaSP</a>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--bg: #0b0c0e;
+		--surface: #131519;
+		--border: #24272d;
+		--text: #e8e9ec;
+		--muted: #8b909a;
+		--accent: #7cf2b1;
+		--font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+		--font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+		--max: 72rem;
+	}
+
+	@media (prefers-color-scheme: light) {
+		:root {
+			--bg: #fbfbfa;
+			--surface: #ffffff;
+			--border: #e3e4e6;
+			--text: #15171a;
+			--muted: #5f646d;
+			--accent: #0a8a52;
+		}
+	}
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: var(--text);
+		font-family: var(--font-sans);
+		line-height: 1.55;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
+	}
+
+	main {
+		max-width: var(--max);
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+</style>
+
+<style>
+	.site-header,
+	.site-footer {
+		max-width: var(--max);
+		margin: 0 auto;
+		padding: 1.25rem 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.wordmark {
+		font-family: var(--font-mono);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		text-decoration: none;
+	}
+
+	nav {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	nav a,
+	.site-footer a {
+		color: var(--muted);
+		text-decoration: none;
+		font-size: 0.925rem;
+	}
+
+	nav a:hover,
+	.site-footer a:hover {
+		color: var(--text);
+	}
+
+	.site-footer {
+		margin-top: 6rem;
+		border-top: 1px solid var(--border);
+		color: var(--muted);
+		font-size: 0.875rem;
+	}
+</style>

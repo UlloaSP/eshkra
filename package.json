@@ -1,0 +1,29 @@
+{
+	"name": "eshkra",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"typecheck": "astro check",
+		"preview": "astro build && wrangler dev",
+		"deploy": "astro build && wrangler deploy",
+		"astro": "astro",
+		"prepare": "vp config --no-agent"
+	},
+	"dependencies": {
+		"astro": "^7.4.0"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
+		"@types/node": "^26.6.5",
+		"typescript": "^6.0.3",
+		"vite-plus": "catalog:",
+		"wrangler": "^4.151.1"
+	},
+	"engines": {
+		"node": ">=22.22.0"
+	},
+	"packageManager": "pnpm@12.14.0"
+}

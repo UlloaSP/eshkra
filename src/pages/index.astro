@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products';
+import { formatCount, getStats, sum } from '../lib/stats';
+
+const stats = await getStats(products);
+const totalStars = sum([...stats.values()].map((s) => s.stars));
+const totalDownloads = sum([...stats.values()].map((s) => s.monthlyDownloads));
+---
+
+<Base
+	title="eshkra — open-source tooling for ML models people can use"
+	description="Package a trained model, describe its inputs, render the form and collect feedback. mlbundle, mlschema, mlform and MLSuite."
+>
+	<section class="hero">
+		<h1>Put machine-learning models in front of people.</h1>
+		<p class="lede">
+			Open-source tools that take a trained model from a file on disk to a form anyone can fill in,
+			with every prediction traceable and every correction kept.
+		</p>
+		<div class="actions">
+			<a class="button primary" href="https://mlsuite.irlab.org">Try MLSuite</a>
+			<a class="button" href="#open-source">See the tools</a>
+		</div>
+	</section>
+
+	<section id="open-source" aria-labelledby="open-source-title">
+		<h2 id="open-source-title">Open source</h2>
+		<p class="section-lede">
+			Each piece works on its own. Together they cover the loop from training to feedback.
+		</p>
+		<div class="grid">
+			{products.map((product, index) => (
+				<ProductCard product={product} stats={stats.get(product.id)} index={index} />
+			))}
+		</div>
+	</section>
+
+	{(totalStars !== null || totalDownloads !== null) && (
+		<section class="numbers" aria-label="Project numbers">
+			{totalDownloads !== null && (
+				<div>
+					<strong>{formatCount(totalDownloads)}</strong>
+					<span>downloads last month</span>
+				</div>
+			)}
+			{totalStars !== null && (
+				<div>
+					<strong>{formatCount(totalStars)}</strong>
+					<span>GitHub stars</span>
+				</div>
+			)}
+			<div>
+				<strong>{products.length}</strong>
+				<span>open-source projects</span>
+			</div>
+		</section>
+	)}
+</Base>
+
+<style>
+	.hero {
+		padding: 7rem 0 5rem;
+		max-width: 48rem;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2.4rem, 6vw, 4rem);
+		line-height: 1.05;
+		letter-spacing: -0.035em;
+		text-wrap: balance;
+	}
+
+	.lede {
+		margin: 1.5rem 0 0;
+		font-size: 1.2rem;
+		color: var(--muted);
+		max-width: 38rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 2.25rem;
+	}
+
+	.button {
+		padding: 0.7rem 1.2rem;
+		border: 1px solid var(--border);
+		border-radius: 0.5rem;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.button:hover {
+		border-color: var(--muted);
+	}
+
+	.button.primary {
+		background: var(--text);
+		border-color: var(--text);
+		color: var(--bg);
+	}
+
+	.button.primary:hover {
+		opacity: 0.88;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.75rem;
+		letter-spacing: -0.02em;
+	}
+
+	.section-lede {
+		margin: 0.5rem 0 2rem;
+		color: var(--muted);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		gap: 1rem;
+	}
+
+	.numbers {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+		gap: 1rem;
+		margin-top: 5rem;
+		padding: 2rem 0;
+		border-top: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.numbers div {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.numbers strong {
+		font-family: var(--font-mono);
+		font-size: 2.25rem;
+		letter-spacing: -0.03em;
+	}
+
+	.numbers span {
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+</style>

@@ -1,0 +1,2 @@
+# autocrlf on Windows would turn LF into CRLF and fail oxfmt.
+* text=auto eol=lf

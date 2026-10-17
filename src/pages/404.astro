@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found — eshkra" description="This page does not exist.">
+	<section class="missing">
+		<h1>404</h1>
+		<p>This page does not exist. <a href="/">Back to eshkra.dev</a></p>
+	</section>
+</Base>
+
+<style>
+	.missing {
+		padding: 8rem 0;
+	}
+
+	h1 {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 4rem;
+	}
+
+	p {
+		color: var(--muted);
+	}
+</style>
