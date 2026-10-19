@@ -1,7 +1,7 @@
 ---
 // Stroke icons follow Lucide's 24px grid (ISC licence); the GitHub mark is filled.
 interface Props {
-	name: 'arrow-right' | 'arrow-up-right' | 'star' | 'download' | 'scale' | 'book' | 'code' | 'github';
+	name: 'arrow-right' | 'arrow-up-right' | 'star' | 'download' | 'scale' | 'book' | 'code' | 'github' | 'play';
 	size?: number;
 	class?: string;
 }
@@ -77,6 +77,9 @@ const { name, size = 16, class: className } = Astro.props;
 				<polyline points="8 6 2 12 8 18" />
 			</>
 		)
+	}
+	{
+		name === 'play' && <polygon points="6 3 20 12 6 21 6 3" />
 	}
 	{
 		name === 'github' && (

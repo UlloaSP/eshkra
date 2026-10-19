@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import { Code } from 'astro:components';
 import type { Product } from '../data/products';
 import { formatCount, type Stats } from '../lib/stats';
@@ -13,7 +13,14 @@ interface Props {
 }
 
 const { product: p, stats } = Astro.props;
-const host = (href: string) => href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+const shot = async (src: ImageMetadata) =>
+	getImage({ src, widths: [720, 1080, 1440], format: 'webp' });
+const capture = p.capture && {
+	...p.capture,
+	lightImage: await shot(p.capture.light),
+	darkImage: await shot(p.capture.dark),
+};
+const sizes = '(max-width: 60rem) 100vw, 44rem';
 const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Boolean).join(' · ');
 ---
 
@@ -47,17 +54,23 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 			{
 				p.app && (
 					<a class="button" href={p.app}>
-						Open {host(p.app)} <Icon name="arrow-up-right" size={14} />
+						Try <Wordmark id={p.id} /> <Icon name="arrow-up-right" size={14} />
 					</a>
 				)
 			}
+			<a class="button" href={p.docs}>
+				<Icon name="book" size={16} /> Docs
+			</a>
 			{
-				p.docs && (
-					<a class="button" href={p.docs}>
-						<Icon name="book" size={16} /> Read the docs
+				p.playground && (
+					<a class="button" href={p.playground}>
+						<Icon name="play" size={14} /> Playground
 					</a>
 				)
 			}
+			<a class="button ghost" href={p.site}>
+				Learn more <Icon name="arrow-right" size={14} />
+			</a>
 			<a class="button ghost" href={`https://github.com/${p.repo}`}>
 				<Icon name="github" size={16} /> GitHub
 			</a>
@@ -73,9 +86,10 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 				)
 			}
 			{
-				stats?.monthlyDownloads != null && (
+				stats?.downloads != null && (
 					<li>
-						<Icon name="download" size={14} /> {formatCount(stats.monthlyDownloads)} downloads / mo
+						<Icon name="download" size={14} /> {formatCount(stats.downloads)}{' '}
+						{stats.downloads === 1 ? 'download' : 'downloads'}
 					</li>
 				)
 			}
@@ -92,11 +106,44 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 		<div class="window">
 			<div class="window-bar">
 				<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-				<span class="window-title mono">{p.snippet.title}</span>
+				<span class="window-title mono">{capture?.title ?? p.snippet?.title}</span>
 			</div>
-			<Code code={p.snippet.code} lang={p.snippet.lang} theme="github-dark-default" class="code" />
+			{
+				capture ? (
+					<picture>
+						<source
+							media="(prefers-color-scheme: dark)"
+							srcset={capture.darkImage.srcSet.attribute}
+							sizes={sizes}
+							type="image/webp"
+						/>
+						<img
+							class="capture"
+							src={capture.lightImage.src}
+							srcset={capture.lightImage.srcSet.attribute}
+							sizes={sizes}
+							alt={capture.alt}
+							width={capture.light.width}
+							height={capture.light.height}
+							loading="lazy"
+							decoding="async"
+						/>
+					</picture>
+				) : (
+					p.snippet && (
+						<Code
+							code={p.snippet.code}
+							lang={p.snippet.lang}
+							themes={{ light: 'github-light-default', dark: 'github-dark-default' }}
+							class="code"
+						/>
+					)
+				)
+			}
 		</div>
-		<figcaption class="visually-hidden">Example from the {p.name} README</figcaption>
+		<figcaption class="visually-hidden">
+			{capture ? `Screenshot of ${p.name}` : `Example from the ${p.name} README`}
+		</figcaption>
 	</figure>
 </article>
 
@@ -258,7 +305,7 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 	.window {
 		border-radius: var(--radius);
 		overflow: hidden;
-		background: #0b0b0d;
+		background: var(--bg);
 		border: 1px solid rgb(255 255 255 / 0.1);
 		box-shadow:
 			0 24px 48px -20px rgb(0 0 0 / 0.55),
@@ -270,7 +317,7 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 		align-items: center;
 		gap: 1rem;
 		padding: 0.75rem 1rem;
-		border-bottom: 1px solid rgb(255 255 255 / 0.08);
+		border-bottom: 1px solid var(--border);
 	}
 
 	.dots {
@@ -282,12 +329,12 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 		width: 0.625rem;
 		height: 0.625rem;
 		border-radius: 50%;
-		background: rgb(255 255 255 / 0.18);
+		background: var(--border-strong);
 	}
 
 	.window-title {
 		font-size: 0.75rem;
-		color: rgb(255 255 255 / 0.6);
+		color: var(--text-3);
 	}
 
 	.window :global(.code) {
@@ -298,7 +345,21 @@ const versionLabel = [stats?.version && `v${stats.version}`, p.status].filter(Bo
 		font-size: 0.78125rem;
 		line-height: 1.7;
 		overflow-x: auto;
-		scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+		scrollbar-color: var(--border-strong) transparent;
+	}
+
+	.capture {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	/* Shiki inlines the light theme and leaves the dark one in --shiki-dark variables. */
+	@media (prefers-color-scheme: dark) {
+		.window :global(.code),
+		.window :global(.code span) {
+			color: var(--shiki-dark) !important;
+		}
 	}
 
 	@media (max-width: 60rem) {

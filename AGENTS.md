@@ -1,14 +1,14 @@
 # eshkra.dev
 
-eshkra.dev is the site for the eshkra open-source projects: mlbundle, mlschema, mlform and MLSuite. It is a static Astro site, served by Cloudflare Workers and built with Vite+.
+eshkra.dev is the site for the eshkra open-source projects: MLbundle, MLschema, MLform and MLsuite. It is a static Astro site, served by Cloudflare Workers and built with Vite+.
 
-The site does one job: show what each project does, how they fit together, and where to go next. The projects live in their own repositories and keep their own docs.
+The site does one job: show what each project does, how they fit together, and where to go next. The projects live in their own repositories and keep their own sites, docs and playgrounds under `*.eshkra.dev`.
 
 ## What we can never compromise on
 
 ### 1. Truthful
 
-Every claim on the site must match the project it describes. Copy comes from each project's README and package metadata, not from imagination. Numbers come from the GitHub, npm and PyPI APIs at build time. Never hardcode, round up or invent a count, a feature or a supported framework.
+Every claim on the site must match the project it describes. Copy comes from each project's README and package metadata, not from imagination. Versions and numbers come from the GitHub, npm, PyPI and pepy.tech APIs at build time. Never hardcode, round up or invent a count, a feature or a supported framework.
 
 ### 2. Fast by default
 
@@ -33,14 +33,14 @@ Treat these instructions as good defaults, not hard rules. The maintainer's pref
 - **you** means the agent reading this file and changing the site.
 - **we, us, and maintainer** mean Pablo, who builds the eshkra projects.
 - **visitor** means a person reading eshkra.dev.
-- **project** means one of mlbundle, mlschema, mlform or MLSuite. MLSuite is an application; the others are libraries.
-- **docs site** means a project's own documentation, hosted outside this repository.
+- **project** means one of MLbundle, MLschema, MLform or MLsuite. MLsuite is an application; the others are libraries.
+- **project site**, **docs site** and **playground** mean `<project>.eshkra.dev`, `docs.<project>.eshkra.dev` and `playground.<project>.eshkra.dev`, all hosted outside this repository. MLsuite has no playground; its public instance is `mlsuite.irlab.org`.
 
 ## The three ways to hurt yourself
 
 1. **Deploying from your machine.** Production deploys come only from CI on `main`. Never run `vp run deploy` or `wrangler deploy` locally, and never change DNS, routes or the custom domain in the Cloudflare dashboard. The domain is declared in `wrangler.jsonc`. The `www.eshkra.dev` to `eshkra.dev` redirect is a zone redirect rule plus a placeholder `www` DNS record; the smoke test in `deploy.yml` checks it.
 2. **Letting an API break the build.** The stats fetchers in `src/lib/stats.ts` return `null` on failure and the page hides that number. Keep it that way. A GitHub, npm or PyPI outage must never block a deploy.
-3. **Scattering project data.** Names, taglines, install commands and docs links live only in `src/data/products.ts`. Docs may move to `*.eshkra.dev` later; that should stay a one-line change.
+3. **Scattering project data.** Names, taglines, install commands and every project link live only in `src/data/products.ts`. Components, the footer and the SEO files derive theirs from it.
 
 ## Hit every surface
 
@@ -48,7 +48,7 @@ Before calling a change done, walk this list and say which entries applied:
 
 - **Viewports.** Narrow phone (390px) and wide desktop.
 - **Themes.** Light and dark, driven by `prefers-color-scheme`.
-- **Projects.** A change to one product card usually applies to all four. Libraries and the application render differently: install command versus "Open the app".
+- **Projects.** A change to one product card usually applies to all four. Libraries and the application render differently: install command and playground versus the public instance.
 - **Missing data.** Stats can be `null` or zero. The page must still read well.
 - **Pages.** The home page and the 404 share the layout in `src/layouts/Base.astro`.
 - **README.** The project table in `README.md` repeats `src/data/products.ts`. Keep them in sync.
@@ -78,7 +78,7 @@ Before calling a change done, walk this list and say which entries applied:
 ## Where code lives
 
 - `src/data/products.ts` - the projects and everything shown about them.
-- `src/lib/stats.ts` - build-time star and download counts.
+- `src/lib/stats.ts` - build-time versions, stars and all-time download counts.
 - `src/data/site.ts` - SEO: description, keywords, schema.org JSON-LD and the `llms.txt` text, all derived from `products.ts`. `src/pages/sitemap.xml.ts` and `src/pages/llms.txt.ts` serve them; `public/robots.txt` welcomes search engines and AI agents; `public/og.png` is the social card.
 - `src/layouts/Base.astro` - document head, header, footer and the design tokens as CSS variables.
 - `src/components/` - page sections and product cards.

@@ -1,3 +1,9 @@
+import type { ImageMetadata } from 'astro';
+import mlformDark from '../assets/captures/mlform-dark.png';
+import mlformLight from '../assets/captures/mlform-light.png';
+import mlsuiteDark from '../assets/captures/mlsuite-dark.png';
+import mlsuiteLight from '../assets/captures/mlsuite-light.png';
+
 export type Registry = { type: 'npm' | 'pypi'; name: string };
 
 export type Snippet = {
@@ -6,6 +12,15 @@ export type Snippet = {
 	/** Title shown on the code window. */
 	title: string;
 	code: string;
+};
+
+/** A screenshot from the project's own landing page, in both themes. */
+export type Capture = {
+	/** Title shown on the window. */
+	title: string;
+	alt: string;
+	light: ImageMetadata;
+	dark: ImageMetadata;
 };
 
 export type Product = {
@@ -25,17 +40,24 @@ export type Product = {
 	repo: string;
 	registry?: Registry;
 	install?: string;
-	docs?: string;
+	/** The project's own site, under *.eshkra.dev. */
+	site: string;
+	docs: string;
+	/** In-browser playground, for the libraries. */
+	playground?: string;
+	/** Public instance, for the application. */
 	app?: string;
 	/** Copied from the project's README; never invent API. */
-	snippet: Snippet;
+	snippet?: Snippet;
+	/** Shown instead of a snippet when the project is easier to see than to read. */
+	capture?: Capture;
 };
 
-// Docs links live here only, so moving them to *.eshkra.dev is a one-line change.
+// Every project link lives here only; components and SEO derive theirs from this list.
 export const products: Product[] = [
 	{
 		id: 'mlbundle',
-		name: 'mlbundle',
+		name: 'MLbundle',
 		kind: 'library',
 		language: 'Python',
 		stage: 'Package',
@@ -43,67 +65,75 @@ export const products: Product[] = [
 		headline: 'Ship models without pickle.',
 		description:
 			'One verifiable .mlbundle file with the model in its native format, a manifest of the training environment and a locally inferred schema. Works with scikit-learn, XGBoost, CatBoost and ONNX.',
-		status: 'pre-alpha',
 		repo: 'UlloaSP/mlbundle',
 		registry: { type: 'pypi', name: 'mlbundle' },
-		install: 'pip install mlbundle',
-		docs: 'https://github.com/UlloaSP/mlbundle#readme',
+		install: 'pip install "mlbundle[sklearn,schema]"',
+		site: 'https://mlbundle.eshkra.dev',
+		docs: 'https://docs.mlbundle.eshkra.dev',
+		playground: 'https://playground.mlbundle.eshkra.dev',
 		snippet: {
 			lang: 'python',
 			title: 'train.py',
-			code: `from sklearn.tree import DecisionTreeClassifier
+			code: `import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
 from mlbundle import export, load
 
-rows = [[0.0, 1.0], [1.0, 0.0], [0.1, 0.9], [0.9, 0.1]]
+training = pd.DataFrame({
+    "temperature": [0.0, 1.0, 0.1, 0.9],
+    "humidity": [1.0, 0.0, 0.9, 0.1],
+    "target": ["cold", "warm", "cold", "warm"],
+})
 model = DecisionTreeClassifier(random_state=7).fit(
-    rows, ["cold", "warm"] * 2
+    training.drop(columns="target"), training["target"]
 )
-export(
-    model, "trained.mlbundle",
-    feature_names=["temperature", "humidity"],
-)
+export(model, "trained.mlbundle",
+       training_data=training, target_names=["target"])
 
 bundle = load("trained.mlbundle")
-print(bundle.predict_proba([[0.0, 1.0]]))  # [[1.0, 0.0]]`,
+result = bundle.predict_record(
+    {"temperature": 0.0, "humidity": 1.0}
+)[0]
+print(result.predicted_label)  # cold`,
 		},
 	},
 	{
 		id: 'mlschema',
-		name: 'mlschema',
+		name: 'MLschema',
 		kind: 'library',
 		language: 'Python',
 		stage: 'Describe',
 		short: 'Schemas from DataFrames',
 		headline: 'Typed inputs, straight from your data.',
 		description:
-			'Infer validated, JSON-serialisable field schemas from pandas DataFrames, then refine only what is product-specific: labels, bounds, defaults and units.',
+			'Infer validated, JSON-serialisable field schemas from pandas DataFrames, then refine only what is product-specific: labels, bounds and defaults.',
+		status: 'pre-1.0',
 		repo: 'UlloaSP/mlschema',
 		registry: { type: 'pypi', name: 'mlschema' },
 		install: 'pip install mlschema',
-		docs: 'https://ulloasp.github.io/mlschema/',
+		site: 'https://mlschema.eshkra.dev',
+		docs: 'https://docs.mlschema.eshkra.dev',
+		playground: 'https://playground.mlschema.eshkra.dev',
 		snippet: {
 			lang: 'python',
 			title: 'schema.py',
 			code: `import pandas as pd
 from mlschema import infer_schema
 
-df = pd.DataFrame({
-    "score": [98.5, 86.0, 91.0],
-    "role": pd.Categorical(
-        ["engineer", "engineer", "scientist"]
-    ),
-    "active": [True, False, True],
+frame = pd.DataFrame({
+    "age": [28, 41],
+    "plan": pd.Categorical(["free", "pro"]),
+    "active": [True, False],
 })
 
-schema = infer_schema(df)
-# [{"kind": "number", "label": "score", ...},
-#  {"kind": "category", "label": "role", ...},
+fields = infer_schema(frame)
+# [{"kind": "number", "label": "age", ...},
+#  {"kind": "category", "label": "plan", ...},
 #  {"kind": "boolean", "label": "active", ...}]`,
 		},
 	},
 	{
 		id: 'mlform',
-		name: 'mlform',
+		name: 'MLform',
 		kind: 'library',
 		language: 'TypeScript',
 		stage: 'Render',
@@ -115,36 +145,15 @@ schema = infer_schema(df)
 		repo: 'UlloaSP/mlform',
 		registry: { type: 'npm', name: 'mlform' },
 		install: 'npm i mlform',
-		docs: 'https://ulloasp.github.io/mlform/',
-		snippet: {
-			lang: 'ts',
-			title: 'form.ts',
-			code: `import { mountForm } from "mlform";
-
-mountForm(container, {
-  transport,
-  schema: {
-    fields: [
-      {
-        id: "threshold",
-        kind: "number",
-        label: "Confidence threshold",
-        min: 0,
-        max: 1,
-        defaultValue: 0.75,
-        mappedTo: "threshold",
-      },
-    ],
-    reports: [
-      {
-        id: "prediction",
-        kind: "classifier",
-        label: "Prediction",
-        mappedTo: "prediction",
-      },
-    ],
-  },
-});`,
+		site: 'https://mlform.eshkra.dev',
+		docs: 'https://docs.mlform.eshkra.dev',
+		playground: 'https://playground.mlform.eshkra.dev',
+		// UlloaSP/mlform landing/src/assets/hero-{light,dark}.png
+		capture: {
+			title: 'Prediction form',
+			alt: 'An MLform form with validated temperature, humidity, wind speed and location fields, and forecast reports showing a 22.66 °C estimate and stable versus changing probabilities.',
+			light: mlformLight,
+			dark: mlformDark,
 		},
 	},
 	{
@@ -159,15 +168,15 @@ mountForm(container, {
 			'Upload a bundle, run single or bulk predictions through a generated form, collect reviews and corrections, and export everything for evaluation or retraining. Self-host it with Docker Compose.',
 		status: 'early',
 		repo: 'UlloaSP/mlsuite',
+		site: 'https://mlsuite.eshkra.dev',
+		docs: 'https://docs.mlsuite.eshkra.dev',
 		app: 'https://mlsuite.irlab.org',
-		snippet: {
-			lang: 'bash',
-			title: 'Terminal',
-			code: `git clone https://github.com/UlloaSP/mlsuite.git
-cd mlsuite && cp .env.example .env
-docker compose -f docker-compose.yml \\
-  -f docker-compose.dev.yml up --build -d
-# then open http://localhost:5173`,
+		// UlloaSP/mlsuite landing/src/assets/captures/predict-{light,dark}.png
+		capture: {
+			title: 'MLsuite · Predict',
+			alt: 'The MLsuite Predict page for a penguin-survey schema: species probabilities, a body mass estimate, the unsaved run in the session panel and the workspace navigation.',
+			light: mlsuiteLight,
+			dark: mlsuiteDark,
 		},
 	},
 ];

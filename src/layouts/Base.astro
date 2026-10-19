@@ -8,6 +8,8 @@ import eshkraMark from '../assets/brand/eshkra.png';
 import { products } from '../data/products';
 import { site } from '../data/site';
 
+const mlsuite = products.find((p) => p.id === 'mlsuite')!;
+
 interface Props {
 	title: string;
 	description: string;
@@ -90,7 +92,7 @@ const year = new Date().getFullYear();
 					<a class="icon-link" href="https://github.com/UlloaSP" aria-label="eshkra on GitHub">
 						<Icon name="github" size={20} />
 					</a>
-					<a class="button small" href="https://mlsuite.irlab.org">
+					<a class="button small" href={mlsuite.app}>
 						Try <Wordmark id="mlsuite" /> <Icon name="arrow-up-right" size={14} />
 					</a>
 				</div>
@@ -118,7 +120,7 @@ const year = new Date().getFullYear();
 					<h2>Projects</h2>
 					{
 						products.map((p) => (
-							<a href={`https://github.com/${p.repo}`}>
+							<a href={p.site}>
 								<Wordmark id={p.id} />
 							</a>
 						))
@@ -127,22 +129,17 @@ const year = new Date().getFullYear();
 				<div class="footer-col">
 					<h2>Docs</h2>
 					{
-						products
-							.filter((p) => p.docs)
-							.map((p) => (
-								<a href={p.docs}>
-									<Wordmark id={p.id} />
-								</a>
-							))
+						products.map((p) => (
+							<a href={p.docs}>
+								<Wordmark id={p.id} />
+							</a>
+						))
 					}
-					<a href="https://github.com/UlloaSP/mlsuite#readme">
-						<Wordmark id="mlsuite" />
-					</a>
 				</div>
 				<div class="footer-col">
 					<h2>eshkra</h2>
 					<a href="https://github.com/UlloaSP">GitHub</a>
-					<a href="https://mlsuite.irlab.org"><Wordmark id="mlsuite" /> instance</a>
+					<a href={mlsuite.app}><Wordmark id="mlsuite" /> instance</a>
 				</div>
 				<p class="footer-legal">© {year} eshkra. Every project is MIT licensed.</p>
 			</div>

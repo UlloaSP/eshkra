@@ -2,7 +2,8 @@ import type { Product } from '../data/products';
 
 export type Stats = {
 	stars: number | null;
-	monthlyDownloads: number | null;
+	/** All-time downloads. */
+	downloads: number | null;
 	version: string | null;
 };
 
@@ -30,18 +31,43 @@ async function getStars(repo: string): Promise<number | null> {
 	return data?.stargazers_count ?? null;
 }
 
-async function getMonthlyDownloads(registry: Product['registry']): Promise<number | null> {
-	if (!registry) return null;
-	if (registry.type === 'npm') {
-		const data = await getJson<{ downloads: number }>(
-			`https://api.npmjs.org/downloads/point/last-month/${registry.name}`,
-		);
-		return data?.downloads ?? null;
+const DAY = 86_400_000;
+
+// npm serves at most 18 months per range query, so sum one-year windows since the first publish.
+async function getNpmDownloads(name: string): Promise<number | null> {
+	const meta = await getJson<{ time: { created: string } }>(`https://registry.npmjs.org/${name}`);
+	if (!meta) return null;
+	const day = (t: number) => new Date(t).toISOString().slice(0, 10);
+	const ranges: string[] = [];
+	for (let from = Date.parse(meta.time.created); from < Date.now(); from += 365 * DAY) {
+		ranges.push(`${day(from)}:${day(Math.min(from + 364 * DAY, Date.now()))}`);
 	}
-	const data = await getJson<{ data: { last_month: number } }>(
-		`https://pypistats.org/api/packages/${registry.name}/recent`,
+	const counts = await Promise.all(
+		ranges.map((range) =>
+			getJson<{ downloads: { downloads: number }[] }>(
+				`https://api.npmjs.org/downloads/range/${range}/${name}`,
+			),
+		),
 	);
-	return data?.data.last_month ?? null;
+	let total = 0;
+	for (const count of counts) {
+		if (!count) return null;
+		total += count.downloads.reduce((acc, d) => acc + d.downloads, 0);
+	}
+	return total;
+}
+
+// PyPI publishes no download counts and pypistats keeps only 180 days, so totals come from pepy.tech.
+async function getPypiDownloads(name: string): Promise<number | null> {
+	const data = await getJson<{ total_downloads: number }>(
+		`https://pepy.tech/api/v2/projects/${name}`,
+	);
+	return data?.total_downloads ?? null;
+}
+
+function getDownloads(registry: Product['registry']): Promise<number | null> {
+	if (!registry) return Promise.resolve(null);
+	return registry.type === 'npm' ? getNpmDownloads(registry.name) : getPypiDownloads(registry.name);
 }
 
 async function getVersion(registry: Product['registry']): Promise<string | null> {
@@ -61,12 +87,12 @@ async function getVersion(registry: Product['registry']): Promise<string | null>
 export async function getStats(products: Product[]): Promise<Map<string, Stats>> {
 	const entries = await Promise.all(
 		products.map(async (p) => {
-			const [stars, monthlyDownloads, version] = await Promise.all([
+			const [stars, downloads, version] = await Promise.all([
 				getStars(p.repo),
-				getMonthlyDownloads(p.registry),
+				getDownloads(p.registry),
 				getVersion(p.registry),
 			]);
-			return [p.id, { stars, monthlyDownloads, version }] as const;
+			return [p.id, { stars, downloads, version }] as const;
 		}),
 	);
 	return new Map(entries);

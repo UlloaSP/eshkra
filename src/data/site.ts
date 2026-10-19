@@ -62,7 +62,8 @@ export function structuredData(versions: Record<string, string | null | undefine
 				'@id': `${site.url}/#${p.id}`,
 				name: p.name,
 				description: `${p.headline} ${p.description}`,
-				url: `${site.url}/#${p.id}`,
+				url: p.site,
+				sameAs: [`https://github.com/${p.repo}`],
 				codeRepository: `https://github.com/${p.repo}`,
 				programmingLanguage: p.language,
 				license: 'https://opensource.org/licenses/MIT',
@@ -97,12 +98,12 @@ export function llmsTxt(versions: Record<string, string | null | undefined>) {
 		const version = versions[p.id]
 			? ` (latest ${versions[p.id]}${p.status ? `, ${p.status}` : ''})`
 			: '';
-		lines.push(
-			`- [${p.name}](https://github.com/${p.repo}): ${p.headline} ${p.description}${version}`,
-		);
+		lines.push(`- [${p.name}](${p.site}): ${p.headline} ${p.description}${version}`);
 		if (p.install) lines.push(`  - Install: \`${p.install}\``);
-		if (p.docs) lines.push(`  - Docs: ${p.docs}`);
+		lines.push(`  - Docs: ${p.docs}`);
+		if (p.playground) lines.push(`  - Playground: ${p.playground}`);
 		if (p.app) lines.push(`  - Public instance: ${p.app}`);
+		lines.push(`  - Source: https://github.com/${p.repo}`);
 	}
 	lines.push(
 		'',

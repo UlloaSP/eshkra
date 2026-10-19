@@ -12,7 +12,7 @@ import { site, structuredData } from '../data/site';
 
 const stats = await getStats(products);
 const totalStars = sum([...stats.values()].map((s) => s.stars));
-const totalDownloads = sum([...stats.values()].map((s) => s.monthlyDownloads));
+const totalDownloads = sum([...stats.values()].map((s) => s.downloads));
 
 const groups = [
 	{
@@ -85,7 +85,7 @@ const groups = [
 				totalDownloads !== null && (
 					<li>
 						<Icon name="download" size={18} />
-						<strong>{formatCount(totalDownloads)}</strong> downloads last month
+						<strong>{formatCount(totalDownloads)}</strong> downloads
 					</li>
 				)
 			}
